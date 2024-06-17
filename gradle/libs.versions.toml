@@ -11,6 +11,10 @@ hilt = "2.51.1"
 androidGradle = "8.4.2"
 androidTools = "31.4.0"
 ksp = "2.0.0-1.0.21"
+androidxComposeBom = "2024.06.00"
+androidxComposeActivity = "1.9.0"
+androidxComposeViewModel = "2.8.2"
+androidxComposeNavigation = "2.7.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -25,6 +29,15 @@ android-gradle = { group = "com.android.tools.build", name = "gradle", version.r
 kotlin-gradle = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
 ksp-gradle = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxComposeActivity" }
+androidx-compose-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxComposeViewModel" }
+androidx-compose-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
+androidx-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxComposeNavigation" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -34,6 +47,8 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 moodline-android-application = { id = "com.moodline.convention.plugins.android.application", version = "unspecified" }
 moodline-android-library = { id = "com.moodline.convention.plugins.android.library", version = "unspecified" }
 moodline-android-hilt = { id = "com.moodline.convention.plugins.android.hilt", version = "unspecified" }
+moodline-android-compose-application = { id = "com.moodline.convention.plugins.android.compose.application", version = "unspecified" }
+moodline-android-compose-library = { id = "com.moodline.convention.plugins.android.compose.library", version = "unspecified" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 

@@ -37,5 +37,15 @@ gradlePlugin {
             id = "com.moodline.convention.plugins.android.hilt"
             implementationClass = "com.buildlogic.plugins.AndroidHiltConventionPlugin"
         }
+
+        register("androidComposeApplication") {
+            id = "com.moodline.convention.plugins.android.compose.application"
+            implementationClass = "com.buildlogic.plugins.AndroidComposeApplicationConventionPlugin"
+        }
+
+        register("androidComposeLibrary") {
+            id = "com.moodline.convention.plugins.android.compose.library"
+            implementationClass = "com.buildlogic.plugins.AndroidComposeLibraryConventionPlugin"
+        }
     }
 }

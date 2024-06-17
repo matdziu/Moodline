@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.moodline.android.application)
     alias(libs.plugins.moodline.android.hilt)
+    alias(libs.plugins.moodline.android.compose.application)
 }
 
 android {
@@ -31,6 +32,9 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.compose.activity)
+    implementation(libs.androidx.compose.viewmodel)
+    implementation(libs.androidx.compose.navigation)
 
     testImplementation(libs.junit)
 }
