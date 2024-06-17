@@ -1,17 +1,16 @@
 [versions]
-agp = "8.4.1"
-kotlin = "1.9.23"
+agp = "8.4.2"
+kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
 appcompat = "1.7.0"
 material = "1.10.0"
-androidxComposeBom = "2024.05.00"
-androidxComposeActivity = "1.9.0"
-androidxComposeViewModel = "2.6.1"
-androidxComposeNavigation = "2.7.7"
-hilt = "2.44"
+hilt = "2.51.1"
+androidGradle = "8.4.2"
+androidTools = "31.4.0"
+ksp = "2.0.0-1.0.21"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -20,22 +19,22 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
-androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
-androidx-compose-tooling = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-compose-tooling-debug = { group = "androidx.compose.ui", name = "ui-tooling" }
-androidx-compose-activity = { group = "androidx.activity", name = "activity-compose", version.ref = "androidxComposeActivity" }
-androidx-compose-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxComposeViewModel" }
-androidx-compose-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
-androidx-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxComposeNavigation" }
-androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
+android-gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradle" }
+kotlin-gradle = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+android-tools-common = { group = "com.android.tools", name = "common", version.ref = "androidTools" }
+ksp-gradle = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+moodline-android-application = { id = "com.moodline.convention.plugins.android.application", version = "unspecified" }
+moodline-android-library = { id = "com.moodline.convention.plugins.android.library", version = "unspecified" }
+moodline-android-hilt = { id = "com.moodline.convention.plugins.android.hilt", version = "unspecified" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 
 
