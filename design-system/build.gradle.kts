@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.google.fonts)
 
     testImplementation(libs.junit)
 }

@@ -3,7 +3,7 @@ package com.moodline
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.designsystem.components.TestComponent
+import com.designsystem.theme.MoodlineTheme
 
 class MainActivity : ComponentActivity() {
 
@@ -11,7 +11,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            TestComponent()
+            MoodlineTheme {
+
+            }
         }
     }
 }
