@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.androidx.compose.activity)
     implementation(libs.androidx.compose.viewmodel)
     implementation(libs.androidx.compose.navigation)
+    implementation(libs.androidx.splashscreen)
 
     testImplementation(libs.junit)
 }

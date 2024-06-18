@@ -16,6 +16,7 @@ androidxComposeActivity = "1.9.0"
 androidxComposeViewModel = "2.8.2"
 androidxComposeNavigation = "2.7.7"
 androidxComposeGoogleFonts = "1.6.8"
+androidxSplashScreen = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,6 +41,7 @@ androidx-compose-livedata = { group = "androidx.compose.runtime", name = "runtim
 androidx-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidxComposeNavigation" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 androidx-compose-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "androidxComposeGoogleFonts" }
+androidx-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxSplashScreen" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
