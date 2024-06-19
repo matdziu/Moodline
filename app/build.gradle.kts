@@ -28,14 +28,17 @@ android {
 
 dependencies {
     implementation(projects.designSystem)
+    implementation(projects.diary)
+    implementation(projects.stats)
+    implementation(projects.improve)
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
     implementation(libs.androidx.compose.activity)
     implementation(libs.androidx.compose.viewmodel)
     implementation(libs.androidx.compose.navigation)
     implementation(libs.androidx.splashscreen)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.icons.extended)
 
     testImplementation(libs.junit)
 }

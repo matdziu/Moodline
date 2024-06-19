@@ -4,14 +4,13 @@ plugins {
 }
 
 android {
-    namespace = "com.designsystem"
+    namespace = "com.improve"
 }
 
 dependencies {
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.compose.google.fonts)
     implementation(libs.androidx.compose.navigation)
 
     testImplementation(libs.junit)

@@ -17,6 +17,7 @@ androidxComposeViewModel = "2.8.2"
 androidxComposeNavigation = "2.7.7"
 androidxComposeGoogleFonts = "1.6.8"
 androidxSplashScreen = "1.0.0"
+kotlinxCollectionImmutable = "0.3.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -42,6 +43,8 @@ androidx-compose-navigation = { group = "androidx.navigation", name = "navigatio
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 androidx-compose-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "androidxComposeGoogleFonts" }
 androidx-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxSplashScreen" }
+androidx-compose-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxCollectionImmutable" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
