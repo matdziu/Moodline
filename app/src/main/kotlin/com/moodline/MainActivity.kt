@@ -47,7 +47,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         installSplashScreen()
-        
+
         setContent {
             MoodlineTheme {
                 val navController = rememberNavController()
