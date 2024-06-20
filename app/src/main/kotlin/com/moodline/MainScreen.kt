@@ -2,35 +2,63 @@ package com.moodline
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Build
-import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.Book
+import androidx.compose.material.icons.filled.TagFaces
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.designsystem.components.MoodlineBottomNavBar
 import com.designsystem.components.MoodlineBottomNavBarItem
 import com.designsystem.theme.MoodlineTheme
+import com.diary.navigation.diaryRoute
+import com.improve.navigation.improveRoute
+import com.stats.navigation.statsRoute
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toPersistentList
 
 @Composable
 fun MainScreen(
-    navigationBarItems: ImmutableList<MoodlineBottomNavBarItem>,
-    selectedItemId: String,
-    onItemClicked: (String) -> Unit,
+    mainUIState: MainUIState,
+    onBottomNavItemClicked: (String) -> Unit,
     content: @Composable (PaddingValues) -> Unit
 ) {
     Scaffold(
         bottomBar = {
             MoodlineBottomNavBar(
-                items = navigationBarItems,
-                selectedItemId = selectedItemId,
-                onItemClicked = onItemClicked,
+                items = mainUIState.bottomNavBarItems.toBottomNavBarItems(),
+                selectedItemId = mainUIState.selectedNavItemId.toString(),
+                onItemClicked = onBottomNavItemClicked,
             )
         },
         content = content,
     )
+}
+
+@Composable
+private fun ImmutableList<BottomNavBarId>.toBottomNavBarItems(): ImmutableList<MoodlineBottomNavBarItem> {
+    return map {
+        when (it) {
+            BottomNavBarId.DIARY -> MoodlineBottomNavBarItem(
+                id = it.toString(),
+                title = stringResource(id = R.string.bottom_nav_title_diary),
+                icon = Icons.Filled.Book,
+            )
+
+            BottomNavBarId.STATS -> MoodlineBottomNavBarItem(
+                id = it.toString(),
+                title = stringResource(id = R.string.bottom_nav_title_stats),
+                icon = Icons.Filled.BarChart,
+            )
+
+            BottomNavBarId.IMPROVE -> MoodlineBottomNavBarItem(
+                id = it.toString(),
+                title = stringResource(id = R.string.bottom_nav_title_improve),
+                icon = Icons.Filled.TagFaces,
+            )
+        }
+    }.toPersistentList()
 }
 
 @Preview(showBackground = true)
@@ -38,28 +66,9 @@ fun MainScreen(
 private fun MainScreenPreview() {
     MoodlineTheme {
         MainScreen(
-            navigationBarItems = persistentListOf(
-                MoodlineBottomNavBarItem(
-                    id = "1",
-                    route = "first",
-                    title = "First",
-                    icon = Icons.Filled.Notifications,
-                ),
-                MoodlineBottomNavBarItem(
-                    id = "2",
-                    route = "second",
-                    title = "Second",
-                    icon = Icons.Filled.Call,
-                ),
-                MoodlineBottomNavBarItem(
-                    id = "3",
-                    route = "third",
-                    title = "Third",
-                    icon = Icons.Filled.Build,
-                ),
-            ),
-            selectedItemId = "first",
-            onItemClicked = {}) {
+            mainUIState = MainUIState(),
+            onBottomNavItemClicked = {},
+        ) {
         }
     }
 }

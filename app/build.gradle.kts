@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.androidx.splashscreen)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.icons.extended)
+    implementation(libs.androidx.compose.lifecycle)
 
     testImplementation(libs.junit)
 }

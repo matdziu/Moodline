@@ -44,7 +44,6 @@ fun MoodlineBottomNavBar(
 
 data class MoodlineBottomNavBarItem(
     val id: String,
-    val route: String,
     val title: String,
     val icon: ImageVector,
 )
@@ -57,19 +56,16 @@ private fun MoodlineBottomNavBarPreview() {
             items = persistentListOf(
                 MoodlineBottomNavBarItem(
                     id = "1",
-                    route = "first",
                     title = "First",
                     icon = Icons.Filled.Notifications,
                 ),
                 MoodlineBottomNavBarItem(
                     id = "2",
-                    route = "second",
                     title = "Second",
                     icon = Icons.Filled.Call,
                 ),
                 MoodlineBottomNavBarItem(
                     id = "3",
-                    route = "third",
                     title = "Third",
                     icon = Icons.Filled.Build,
                 )
