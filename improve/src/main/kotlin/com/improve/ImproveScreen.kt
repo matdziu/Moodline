@@ -9,7 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun ImproveRoute() {
+internal fun ImproveRoute() {
+    ImproveScreen()
+}
+
+@Composable
+internal fun ImproveScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()

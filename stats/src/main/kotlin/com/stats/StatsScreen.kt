@@ -1,4 +1,4 @@
-package com.diary
+package com.stats
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,12 +9,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun DiaryRoute() {
+internal fun StatsRoute() {
+    StatsScreen()
+}
+
+@Composable
+internal fun StatsScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
-        Text(text = "DIARY")
+        Text(text = "STATS")
     }
 }

@@ -19,8 +19,10 @@ import com.diary.navigation.diaryRoute
 import com.improve.navigation.improveRoute
 import com.moodline.navigation.MoodlineNavHost
 import com.stats.navigation.statsRoute
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.collections.immutable.persistentListOf
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val navigationBarItems by lazy {

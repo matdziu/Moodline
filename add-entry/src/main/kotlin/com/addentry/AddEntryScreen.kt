@@ -1,4 +1,4 @@
-package com.stats
+package com.addentry
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,12 +9,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun StatsRoute() {
+internal fun AddEntryRoute() {
+    AddEntryScreen()
+}
+
+@Composable
+internal fun AddEntryScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
-        Text(text = "STATS")
+        Text(text = "ADD ENTRY")
     }
 }

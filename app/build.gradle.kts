@@ -31,6 +31,7 @@ dependencies {
     implementation(projects.diary)
     implementation(projects.stats)
     implementation(projects.improve)
+    implementation(projects.addEntry)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.compose.activity)
