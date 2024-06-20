@@ -1,5 +1,6 @@
 package com.diary
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 internal fun DiaryRoute(
     navigateToAddEntry: () -> Unit,
+    onBackButtonPressed: () -> Unit,
     diaryViewModel: DiaryViewModel = hiltViewModel(),
 ) {
     val state by diaryViewModel.state.collectAsStateWithLifecycle()
@@ -33,6 +35,9 @@ internal fun DiaryRoute(
         }
     }
 
+    BackHandler {
+        onBackButtonPressed()
+    }
     DiaryScreen(
         diaryUIState = state,
         addEntryButtonPressed = { diaryViewModel.onEvent(DiaryUIEvent.AddEntryButtonPressed) },

@@ -6,8 +6,10 @@ import com.improve.ImproveRoute
 
 const val improveRoute = "improve"
 
-fun NavGraphBuilder.improveRoute() {
+fun NavGraphBuilder.improveRoute(onBackButtonPressed: () -> Unit) {
     composable(route = improveRoute) {
-        ImproveRoute()
+        ImproveRoute(
+            onBackButtonPressed = onBackButtonPressed,
+        )
     }
 }

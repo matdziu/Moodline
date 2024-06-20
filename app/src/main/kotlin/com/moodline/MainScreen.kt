@@ -12,9 +12,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.designsystem.components.MoodlineBottomNavBar
 import com.designsystem.components.MoodlineBottomNavBarItem
 import com.designsystem.theme.MoodlineTheme
-import com.diary.navigation.diaryRoute
-import com.improve.navigation.improveRoute
-import com.stats.navigation.statsRoute
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 

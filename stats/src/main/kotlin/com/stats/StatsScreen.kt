@@ -1,5 +1,6 @@
 package com.stats
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
@@ -11,7 +12,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.designsystem.theme.MoodlineTheme
 
 @Composable
-internal fun StatsRoute() {
+internal fun StatsRoute(onBackButtonPressed: () -> Unit) {
+
+    BackHandler {
+        onBackButtonPressed()
+    }
     StatsScreen()
 }
 

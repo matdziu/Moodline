@@ -13,6 +13,8 @@ import com.stats.navigation.statsRoute
 @Composable
 fun MoodlineNavHost(
     navController: NavHostController,
+    closeApp: () -> Unit,
+    navigateToDiary: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     NavHost(
@@ -21,10 +23,15 @@ fun MoodlineNavHost(
         modifier = modifier,
     ) {
         diaryRoute(
-            navigateToAddEntry = { navController.navigateToAddEntry() }
+            navigateToAddEntry = { navController.navigateToAddEntry() },
+            onBackButtonPressed = { closeApp() }
         )
-        statsRoute()
-        improveRoute()
+        statsRoute(
+            onBackButtonPressed = { navigateToDiary() }
+        )
+        improveRoute(
+            onBackButtonPressed = { navigateToDiary() }
+        )
         addEntryRoute()
     }
 }

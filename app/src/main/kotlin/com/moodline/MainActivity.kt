@@ -65,6 +65,10 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     MoodlineNavHost(
                         navController = navController,
+                        closeApp = ::finish,
+                        navigateToDiary = {
+                            mainViewModel.onBottomNavItemClicked(BottomNavBarId.DIARY.toString())
+                        },
                         modifier = Modifier.padding(innerPadding),
                     )
                 }
