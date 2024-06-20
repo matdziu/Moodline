@@ -32,7 +32,7 @@ internal fun DiaryRoute(
         DiaryNavigationEvent.Default -> { /* do nothing */
         }
     }
-    
+
     DiaryScreen(
         diaryUIState = state,
         addEntryButtonPressed = { diaryViewModel.onEvent(DiaryUIEvent.AddEntryButtonPressed) },

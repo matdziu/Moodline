@@ -1,60 +1,44 @@
-package com.designsystem.components
+package com.moodline
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Text
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
+import com.designsystem.components.MoodlineBottomNavBar
+import com.designsystem.components.MoodlineBottomNavBarItem
 import com.designsystem.theme.MoodlineTheme
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 @Composable
-fun MoodlineBottomNavBar(
-    items: ImmutableList<MoodlineBottomNavBarItem>,
+fun MainScreen(
+    navigationBarItems: ImmutableList<MoodlineBottomNavBarItem>,
     selectedItemId: String,
     onItemClicked: (String) -> Unit,
+    content: @Composable (PaddingValues) -> Unit
 ) {
-    NavigationBar {
-        items.forEach {
-            NavigationBarItem(
-                selected = selectedItemId == it.id,
-                icon = {
-                    Icon(
-                        imageVector = it.icon,
-                        contentDescription = null,
-                    )
-                },
-                label = {
-                    Text(text = it.title)
-                },
-                onClick = {
-                    onItemClicked(it.id)
-                }
+    Scaffold(
+        bottomBar = {
+            MoodlineBottomNavBar(
+                items = navigationBarItems,
+                selectedItemId = selectedItemId,
+                onItemClicked = onItemClicked,
             )
-        }
-    }
+        },
+        content = content,
+    )
 }
 
-data class MoodlineBottomNavBarItem(
-    val id: String,
-    val route: String,
-    val title: String,
-    val icon: ImageVector,
-)
-
-@Preview
+@Preview(showBackground = true)
 @Composable
-private fun MoodlineBottomNavBarPreview() {
+private fun MainScreenPreview() {
     MoodlineTheme {
-        MoodlineBottomNavBar(
-            items = persistentListOf(
+        MainScreen(
+            navigationBarItems = persistentListOf(
                 MoodlineBottomNavBarItem(
                     id = "1",
                     route = "first",
@@ -72,10 +56,10 @@ private fun MoodlineBottomNavBarPreview() {
                     route = "third",
                     title = "Third",
                     icon = Icons.Filled.Build,
-                )
+                ),
             ),
-            selectedItemId = "1",
-            onItemClicked = {},
-        )
+            selectedItemId = "first",
+            onItemClicked = {}) {
+        }
     }
 }

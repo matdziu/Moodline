@@ -106,12 +106,12 @@ fun MoodlineTheme(
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
                 useDarkTheme
         }
-
-        MaterialTheme(
-            colorScheme = colorScheme,
-            typography = MoodlineTypography,
-            content = content,
-        )
     }
+
+    MaterialTheme(
+        colorScheme = colorScheme,
+        typography = MoodlineTypography,
+        content = content,
+    )
 }
 

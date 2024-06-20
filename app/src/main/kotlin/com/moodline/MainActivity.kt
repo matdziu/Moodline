@@ -8,11 +8,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.TagFaces
-import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
-import com.designsystem.components.MoodlineBottomNavBar
 import com.designsystem.components.MoodlineBottomNavBarItem
 import com.designsystem.theme.MoodlineTheme
 import com.diary.navigation.diaryRoute
@@ -28,16 +27,19 @@ class MainActivity : ComponentActivity() {
     private val navigationBarItems by lazy {
         persistentListOf(
             MoodlineBottomNavBarItem(
+                id = "",
                 route = diaryRoute,
                 title = getString(R.string.bottom_nav_title_diary),
                 icon = Icons.Filled.Book,
             ),
             MoodlineBottomNavBarItem(
+                id = "",
                 route = statsRoute,
                 title = getString(R.string.bottom_nav_title_stats),
                 icon = Icons.Filled.BarChart,
             ),
             MoodlineBottomNavBarItem(
+                id = "",
                 route = improveRoute,
                 title = getString(R.string.bottom_nav_title_improve),
                 icon = Icons.Filled.TagFaces,
@@ -51,19 +53,18 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
 
         setContent {
+            val navController = rememberNavController()
+            val mainViewModel: MainViewModel = hiltViewModel()
+
             MoodlineTheme {
-                val navController = rememberNavController()
-                Scaffold(
-                    bottomBar = {
-                        MoodlineBottomNavBar(
-                            navController = navController,
-                            items = navigationBarItems,
-                        )
-                    }
+                MainScreen(
+                    navigationBarItems = navigationBarItems,
+                    selectedItemId = "1",
+                    onItemClicked = {},
                 ) { innerPadding ->
                     MoodlineNavHost(
                         navController = navController,
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.padding(innerPadding),
                     )
                 }
             }
