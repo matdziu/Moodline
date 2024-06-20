@@ -78,6 +78,7 @@ class MainActivity : ComponentActivity() {
     ) {
         navController.navigate(route) {
             popUpTo(navController.graph.findStartDestination().id) {
+                inclusive = true
                 saveState = true
             }
             launchSingleTop = true
