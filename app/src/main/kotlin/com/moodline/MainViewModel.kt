@@ -1,5 +1,6 @@
 package com.moodline
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,10 +14,18 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-@HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel() {
+const val SELECTED_NAV_ITEM_ID_KEY = "selected-nav-item-id"
 
-    private val _state: MutableStateFlow<MainUIState> = MutableStateFlow(MainUIState())
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val savedStateHandle: SavedStateHandle,
+) : ViewModel() {
+
+    private val _state: MutableStateFlow<MainUIState> = MutableStateFlow(
+        MainUIState(
+            selectedNavItemId = savedStateHandle[SELECTED_NAV_ITEM_ID_KEY] ?: BottomNavBarId.DIARY
+        )
+    )
     val state: StateFlow<MainUIState> = _state.asStateFlow()
 
     private val _navigationEvents: MutableSharedFlow<MainNavigationEvent> = MutableSharedFlow()
@@ -31,6 +40,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun handleDiaryBottomNavIconPressed() {
+        savedStateHandle[SELECTED_NAV_ITEM_ID_KEY] = BottomNavBarId.DIARY
         viewModelScope.launch {
             _navigationEvents.emit(MainNavigationEvent.GoToDiary)
         }
@@ -42,6 +52,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun handleImproveBottomNavIconPressed() {
+        savedStateHandle[SELECTED_NAV_ITEM_ID_KEY] = BottomNavBarId.IMPROVE
         viewModelScope.launch {
             _navigationEvents.emit(MainNavigationEvent.GoToImprove)
         }
@@ -53,6 +64,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
     }
 
     private fun handleStatsBottomNavIconPressed() {
+        savedStateHandle[SELECTED_NAV_ITEM_ID_KEY] = BottomNavBarId.STATS
         viewModelScope.launch {
             _navigationEvents.emit(MainNavigationEvent.GoToStats)
         }
