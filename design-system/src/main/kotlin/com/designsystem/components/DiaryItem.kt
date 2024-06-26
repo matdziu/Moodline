@@ -45,7 +45,7 @@ fun DiaryItem(
                 Spacer(modifier = modifier.width(16.dp))
                 Text(
                     text = "rad",
-                    style = MaterialTheme.typography.headlineLarge,
+                    style = MaterialTheme.typography.displayMedium,
                     color = customColors.radEmotionColor,
                     fontWeight = FontWeight.ExtraBold
                 )
