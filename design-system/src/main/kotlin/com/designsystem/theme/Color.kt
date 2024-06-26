@@ -37,6 +37,11 @@ val surfaceContainerLowLight = Color(0xFFFCF2E6)
 val surfaceContainerLight = Color(0xFFF6ECE1)
 val surfaceContainerHighLight = Color(0xFFF1E7DB)
 val surfaceContainerHighestLight = Color(0xFFEBE1D6)
+val radEmotionLight = Color(0xFF43c5a7)
+val goodEmotionLight = Color(0xFFa7db63)
+val mehEmotionLight = Color(0xFF71b5de)
+val badEmotionLight = Color(0xFFfba250)
+val awfulEmotionLight = Color(0xFFee6e62)
 
 val primaryDark = Color(0xFFFFF8F3)
 val onPrimaryDark = Color(0xFF412D00)
@@ -73,6 +78,11 @@ val surfaceContainerLowDark = Color(0xFF1F1B14)
 val surfaceContainerDark = Color(0xFF231F18)
 val surfaceContainerHighDark = Color(0xFF2E2922)
 val surfaceContainerHighestDark = Color(0xFF39342C)
+val radEmotionDark = Color(0xFF43c5a7)
+val goodEmotionDark = Color(0xFFa7db63)
+val mehEmotionDark = Color(0xFF71b5de)
+val badEmotionDark = Color(0xFFfba250)
+val awfulEmotionDark = Color(0xFFee6e62)
 
 
 

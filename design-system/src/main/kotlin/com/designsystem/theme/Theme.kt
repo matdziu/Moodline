@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
@@ -49,6 +50,14 @@ private val lightScheme = lightColorScheme(
     surfaceContainerHighest = surfaceContainerHighestLight,
 )
 
+private val lightCustomColors = CustomColorsPalette(
+    radEmotionColor = radEmotionLight,
+    goodEmotionColor = goodEmotionLight,
+    mehEmotionColor = mehEmotionLight,
+    badEmotionColor = badEmotionLight,
+    awfulEmotionColor = awfulEmotionLight,
+)
+
 private val darkScheme = darkColorScheme(
     primary = primaryDark,
     onPrimary = onPrimaryDark,
@@ -87,15 +96,28 @@ private val darkScheme = darkColorScheme(
     surfaceContainerHighest = surfaceContainerHighestDark,
 )
 
+private val darkCustomColors = CustomColorsPalette(
+    radEmotionColor = radEmotionDark,
+    goodEmotionColor = goodEmotionDark,
+    mehEmotionColor = mehEmotionDark,
+    badEmotionColor = badEmotionDark,
+    awfulEmotionColor = awfulEmotionDark,
+)
+
 @Composable
 fun MoodlineTheme(
-    useDarkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    useDarkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit
 ) {
     val colorScheme = if (useDarkTheme) {
         darkScheme
     } else {
         lightScheme
+    }
+
+    val customColors = if (useDarkTheme) {
+        darkCustomColors
+    } else {
+        lightCustomColors
     }
 
     val view = LocalView.current
@@ -111,7 +133,13 @@ fun MoodlineTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = MoodlineTypography,
-        content = content,
+        content = {
+            CompositionLocalProvider(
+                LocalCustomColorsPalette provides customColors,
+            ) {
+                content()
+            }
+        }
     )
 }
 
