@@ -38,11 +38,11 @@ fun DiaryItem(
             .wrapContentHeight()
     ) {
         Column(
-            modifier = modifier.padding(all = 16.dp)
+            modifier = Modifier.padding(all = 16.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RadEmotionImage(modifier = Modifier.size(60.dp))
-                Spacer(modifier = modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(16.dp))
                 Text(
                     text = "rad",
                     style = MaterialTheme.typography.displayMedium,
@@ -50,7 +50,7 @@ fun DiaryItem(
                     fontWeight = FontWeight.ExtraBold
                 )
             }
-            Spacer(modifier = modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = text,
                 maxLines = 2,

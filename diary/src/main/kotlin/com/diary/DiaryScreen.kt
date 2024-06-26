@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.designsystem.components.DiaryItem
 
 @Composable
 internal fun DiaryRoute(
@@ -50,6 +51,12 @@ internal fun DiaryScreen(
     addEntryButtonPressed: () -> Unit = {},
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
+
+        DiaryItem(
+            modifier = Modifier.padding(all = 16.dp),
+            text = "asidajiodjasioda",
+        )
+
         Text(
             modifier = Modifier.align(Alignment.Center),
             text = "DIARY",
