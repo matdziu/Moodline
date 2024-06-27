@@ -85,7 +85,7 @@ internal fun DiaryScreen(
             items(diaryUIState.entries) {
                 DiaryListItem(
                     modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
-                    entryPreviewText = it.entryText,
+                    entryText = it.entryText,
                     emotionSymbol = it.emotion.toEmotionSymbol(),
                     formattedDate = it.formattedDate
                 )

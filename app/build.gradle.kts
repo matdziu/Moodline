@@ -32,6 +32,7 @@ dependencies {
     implementation(projects.stats)
     implementation(projects.improve)
     implementation(projects.addEntry)
+    implementation(projects.storage)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.compose.activity)

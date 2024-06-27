@@ -29,7 +29,7 @@ import com.designsystem.theme.customColors
 @Composable
 fun DiaryListItem(
     modifier: Modifier = Modifier,
-    entryPreviewText: String,
+    entryText: String,
     emotionSymbol: EmotionSymbol,
     formattedDate: String,
 ) {
@@ -96,7 +96,7 @@ fun DiaryListItem(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = entryPreviewText,
+                text = entryText,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Start,
@@ -110,7 +110,7 @@ fun DiaryListItem(
 private fun DiaryItemPreview() {
     MoodlineTheme {
         DiaryListItem(
-            entryPreviewText = "This is a preview text. This text will be cut when it does not fit the screen. Lorem ipsum bla bla bla",
+            entryText = "Lorem ipsum bla bla bla",
             emotionSymbol = EmotionSymbol.Rad,
             formattedDate = "10:30, 22nd March 2024"
         )
