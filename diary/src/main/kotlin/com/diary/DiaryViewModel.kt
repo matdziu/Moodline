@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.domain.entities.Emotion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -33,55 +34,62 @@ class DiaryViewModel @Inject constructor() : ViewModel() {
 
     private fun handleInitializeEvent() {
         _state.update {
-            it.copy(
-                entries = persistentListOf(
-                    DiaryItem(
-                        emotion = Emotion.Rad,
-                        entryText = "test1",
-                        formattedDate = "10:30, 22nd March 1994"
-                    ),
-                    DiaryItem(
-                        emotion = Emotion.Rad,
-                        entryText = "test2",
-                        formattedDate = "10:30, 22nd March 1994"
-                    ),
-                    DiaryItem(
-                        emotion = Emotion.Rad,
-                        entryText = "test3",
-                        formattedDate = "10:30, 22nd March 1994"
-                    ),
-                    DiaryItem(
-                        emotion = Emotion.Good,
-                        entryText = "test4",
-                        formattedDate = "10:30, 22nd March 1994"
-                    ),
-                    DiaryItem(
-                        emotion = Emotion.Good,
-                        entryText = "test5",
-                        formattedDate = "10:30, 22nd March 1994"
-                    ),
-                    DiaryItem(
-                        emotion = Emotion.Good,
-                        entryText = "test6",
-                        formattedDate = "10:30, 22nd March 1994"
-                    ),
-                    DiaryItem(
-                        emotion = Emotion.Awful,
-                        entryText = "test7",
-                        formattedDate = "10:30, 22nd March 1994"
-                    ),
-                    DiaryItem(
-                        emotion = Emotion.Awful,
-                        entryText = "test8",
-                        formattedDate = "10:30, 22nd March 1994"
-                    ),
-                    DiaryItem(
-                        emotion = Emotion.Awful,
-                        entryText = "test9",
-                        formattedDate = "10:30, 22nd March 1994"
+            it.copy(progress = true)
+        }
+        viewModelScope.launch {
+            delay(2000)
+            _state.update {
+                it.copy(
+                    progress = false,
+                    entries = persistentListOf(
+                        DiaryItem(
+                            emotion = Emotion.Rad,
+                            entryText = "test1",
+                            formattedDate = "10:30, 22nd March 1994"
+                        ),
+                        DiaryItem(
+                            emotion = Emotion.Rad,
+                            entryText = "test2",
+                            formattedDate = "10:30, 22nd March 1994"
+                        ),
+                        DiaryItem(
+                            emotion = Emotion.Rad,
+                            entryText = "test3",
+                            formattedDate = "10:30, 22nd March 1994"
+                        ),
+                        DiaryItem(
+                            emotion = Emotion.Good,
+                            entryText = "test4",
+                            formattedDate = "10:30, 22nd March 1994"
+                        ),
+                        DiaryItem(
+                            emotion = Emotion.Good,
+                            entryText = "test5",
+                            formattedDate = "10:30, 22nd March 1994"
+                        ),
+                        DiaryItem(
+                            emotion = Emotion.Good,
+                            entryText = "test6",
+                            formattedDate = "10:30, 22nd March 1994"
+                        ),
+                        DiaryItem(
+                            emotion = Emotion.Awful,
+                            entryText = "test7",
+                            formattedDate = "10:30, 22nd March 1994"
+                        ),
+                        DiaryItem(
+                            emotion = Emotion.Awful,
+                            entryText = "test8",
+                            formattedDate = "10:30, 22nd March 1994"
+                        ),
+                        DiaryItem(
+                            emotion = Emotion.Awful,
+                            entryText = "test9",
+                            formattedDate = "10:30, 22nd March 1994"
+                        )
                     )
                 )
-            )
+            }
         }
     }
 

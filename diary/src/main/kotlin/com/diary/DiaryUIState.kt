@@ -5,6 +5,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 
 data class DiaryUIState(
+    val progress: Boolean = false,
     val entries: ImmutableList<DiaryItem> = persistentListOf(),
 )
 

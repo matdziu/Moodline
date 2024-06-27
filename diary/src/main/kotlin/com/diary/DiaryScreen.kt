@@ -11,16 +11,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.common.extensions.toEmotionSymbol
 import com.designsystem.components.DiaryListItem
+import com.designsystem.components.FullScreenProgressIndicator
+import com.designsystem.components.OneTimeLaunchedEffect
 
 @Composable
 internal fun DiaryRoute(
@@ -40,7 +43,7 @@ internal fun DiaryRoute(
         }
     }
 
-    LaunchedEffect(Unit) {
+    OneTimeLaunchedEffect {
         diaryViewModel.onEvent(DiaryUIEvent.Initialize)
     }
 
@@ -59,6 +62,17 @@ internal fun DiaryScreen(
     addEntryButtonPressed: () -> Unit = {},
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
+
+        if (diaryUIState.progress) {
+            FullScreenProgressIndicator()
+        }
+
+        if (diaryUIState.entries.isEmpty() && !diaryUIState.progress) {
+            Text(
+                modifier = Modifier.align(Alignment.Center),
+                text = stringResource(id = R.string.empty_diary_text)
+            )
+        }
 
         LazyColumn(
             contentPadding = PaddingValues(
