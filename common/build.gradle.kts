@@ -7,9 +7,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.designSystem)
-    implementation(projects.domain)
-
     implementation(libs.androidx.core.ktx)
     testImplementation(libs.junit)
 }

@@ -22,6 +22,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.common.constants.MAX_CHAR_LENGTH_OF_DIARY_ENTRY
 import com.designsystem.R
 import com.designsystem.theme.MoodlineTheme
 import com.designsystem.theme.customColors
@@ -96,9 +97,7 @@ fun DiaryListItem(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = entryText,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
+                text = entryText.take(MAX_CHAR_LENGTH_OF_DIARY_ENTRY),
                 textAlign = TextAlign.Start,
             )
         }
