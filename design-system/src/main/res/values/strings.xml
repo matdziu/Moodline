@@ -1,0 +1,7 @@
+<resources>
+    <string name="emotion_symbol_rad_text">rad</string>
+    <string name="emotion_symbol_good_text">good</string>
+    <string name="emotion_symbol_meh_text">meh</string>
+    <string name="emotion_symbol_bad_text">bad</string>
+    <string name="emotion_symbol_awful_text">awful</string>
+</resources>

@@ -16,18 +16,22 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.designsystem.R
 import com.designsystem.theme.MoodlineTheme
 import com.designsystem.theme.customColors
 
 @Composable
 fun DiaryItem(
     modifier: Modifier = Modifier,
-    text: String,
+    entryPreviewText: String,
+    emotionSymbol: EmotionSymbol,
+    formattedDate: String,
 ) {
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
@@ -35,24 +39,64 @@ fun DiaryItem(
         ),
         modifier = modifier
             .fillMaxWidth()
-            .wrapContentHeight()
+            .wrapContentHeight(),
+        colors = CardDefaults.elevatedCardColors().copy(
+            containerColor = MaterialTheme.colorScheme.onPrimary,
+        ),
     ) {
         Column(
             modifier = Modifier.padding(all = 16.dp)
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                RadEmotionImage(modifier = Modifier.size(60.dp))
+
+                val emotionImageModifier = Modifier.size(60.dp)
+                when (emotionSymbol) {
+                    EmotionSymbol.Awful -> AwfulEmotionImage(modifier = emotionImageModifier)
+                    EmotionSymbol.Bad -> BadEmotionImage(modifier = emotionImageModifier)
+                    EmotionSymbol.Good -> GoodEmotionImage(modifier = emotionImageModifier)
+                    EmotionSymbol.Meh -> MehEmotionImage(modifier = emotionImageModifier)
+                    EmotionSymbol.Rad -> RadEmotionImage(modifier = emotionImageModifier)
+                }
+
                 Spacer(modifier = Modifier.width(16.dp))
-                Text(
-                    text = "rad",
-                    style = MaterialTheme.typography.displayMedium,
-                    color = customColors.radEmotionColor,
-                    fontWeight = FontWeight.ExtraBold
+
+                val emotionText = stringResource(
+                    id = when (emotionSymbol) {
+                        EmotionSymbol.Awful -> R.string.emotion_symbol_awful_text
+                        EmotionSymbol.Bad -> R.string.emotion_symbol_bad_text
+                        EmotionSymbol.Good -> R.string.emotion_symbol_good_text
+                        EmotionSymbol.Meh -> R.string.emotion_symbol_meh_text
+                        EmotionSymbol.Rad -> R.string.emotion_symbol_rad_text
+                    }
                 )
+                val emotionColor = when (emotionSymbol) {
+                    EmotionSymbol.Awful -> customColors.awfulEmotionColor
+                    EmotionSymbol.Bad -> customColors.badEmotionColor
+                    EmotionSymbol.Good -> customColors.goodEmotionColor
+                    EmotionSymbol.Meh -> customColors.mehEmotionColor
+                    EmotionSymbol.Rad -> customColors.radEmotionColor
+                }
+                Column {
+                    Text(
+                        text = formattedDate,
+                        style = MaterialTheme.typography.labelSmall,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        textAlign = TextAlign.Start,
+                    )
+                    Text(
+                        text = emotionText,
+                        style = MaterialTheme.typography.displayMedium,
+                        color = emotionColor,
+                        fontWeight = FontWeight.ExtraBold
+                    )
+                }
             }
+
             Spacer(modifier = Modifier.height(16.dp))
+
             Text(
-                text = text,
+                text = entryPreviewText,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Start,
@@ -66,7 +110,9 @@ fun DiaryItem(
 private fun DiaryItemPreview() {
     MoodlineTheme {
         DiaryItem(
-            text = "This is a preview text. This text will be cut when it does not fit the screen. Lorem ipsum bla bla bla"
+            entryPreviewText = "This is a preview text. This text will be cut when it does not fit the screen. Lorem ipsum bla bla bla",
+            emotionSymbol = EmotionSymbol.Rad,
+            formattedDate = "10:30, 22nd March 2024"
         )
     }
 }
