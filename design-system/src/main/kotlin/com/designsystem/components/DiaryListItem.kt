@@ -27,7 +27,7 @@ import com.designsystem.theme.MoodlineTheme
 import com.designsystem.theme.customColors
 
 @Composable
-fun DiaryItem(
+fun DiaryListItem(
     modifier: Modifier = Modifier,
     entryPreviewText: String,
     emotionSymbol: EmotionSymbol,
@@ -109,7 +109,7 @@ fun DiaryItem(
 @Composable
 private fun DiaryItemPreview() {
     MoodlineTheme {
-        DiaryItem(
+        DiaryListItem(
             entryPreviewText = "This is a preview text. This text will be cut when it does not fit the screen. Lorem ipsum bla bla bla",
             emotionSymbol = EmotionSymbol.Rad,
             formattedDate = "10:30, 22nd March 2024"

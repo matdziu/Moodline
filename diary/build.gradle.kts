@@ -11,6 +11,7 @@ android {
 dependencies {
     implementation(projects.designSystem)
     implementation(projects.domain)
+    implementation(projects.common)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.compose.material3)
