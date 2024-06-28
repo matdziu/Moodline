@@ -9,6 +9,7 @@ android {
 
 dependencies {
     implementation(projects.common)
+    implementation(projects.domain)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.compose.material3)

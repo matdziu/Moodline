@@ -1,4 +1,4 @@
-package com.diary.extensions
+package com.designsystem.extensions
 
 import com.designsystem.components.EmotionSymbol
 import com.domain.entities.Emotion
@@ -10,5 +10,15 @@ fun Emotion.toEmotionSymbol(): EmotionSymbol {
         Emotion.Good -> EmotionSymbol.Good
         Emotion.Meh -> EmotionSymbol.Meh
         Emotion.Rad -> EmotionSymbol.Rad
+    }
+}
+
+fun EmotionSymbol.toEmotion(): Emotion {
+    return when (this) {
+        EmotionSymbol.Awful -> Emotion.Awful
+        EmotionSymbol.Bad -> Emotion.Bad
+        EmotionSymbol.Good -> Emotion.Good
+        EmotionSymbol.Meh -> Emotion.Meh
+        EmotionSymbol.Rad -> Emotion.Rad
     }
 }

@@ -17,13 +17,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.diary.extensions.toEmotionSymbol
 import com.designsystem.components.DiaryListItem
 import com.designsystem.components.FullScreenProgressIndicator
 import com.designsystem.components.OneTimeLaunchedEffect
+import com.designsystem.extensions.toEmotionSymbol
 
 @Composable
 internal fun DiaryRoute(
@@ -69,8 +70,11 @@ internal fun DiaryScreen(
 
         if (diaryUIState.entries.isEmpty() && !diaryUIState.progress) {
             Text(
-                modifier = Modifier.align(Alignment.Center),
-                text = stringResource(id = R.string.empty_diary_text)
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .padding(16.dp),
+                text = stringResource(id = R.string.empty_diary_text),
+                textAlign = TextAlign.Center
             )
         }
 

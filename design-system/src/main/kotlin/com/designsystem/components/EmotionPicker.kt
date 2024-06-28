@@ -35,7 +35,7 @@ import com.designsystem.theme.customColors
 @Composable
 fun EmotionPicker(
     modifier: Modifier = Modifier,
-    selection: EmotionSymbol,
+    selection: EmotionSymbol?,
     onEmotionPressed: (EmotionSymbol) -> Unit,
     noSelectionError: Boolean = false,
 ) {
@@ -90,7 +90,7 @@ fun EmotionPicker(
 @Composable
 private fun RadEmotionWithSelector(
     onEmotionPressed: (EmotionSymbol) -> Unit,
-    selection: EmotionSymbol,
+    selection: EmotionSymbol?,
 ) {
     EmotionWithSelector(
         emotionSymbol = EmotionSymbol.Rad,
@@ -102,7 +102,7 @@ private fun RadEmotionWithSelector(
 @Composable
 private fun GoodEmotionWithSelector(
     onEmotionPressed: (EmotionSymbol) -> Unit,
-    selection: EmotionSymbol,
+    selection: EmotionSymbol?,
 ) {
     EmotionWithSelector(
         emotionSymbol = EmotionSymbol.Good,
@@ -114,7 +114,7 @@ private fun GoodEmotionWithSelector(
 @Composable
 private fun MehEmotionWithSelector(
     onEmotionPressed: (EmotionSymbol) -> Unit,
-    selection: EmotionSymbol,
+    selection: EmotionSymbol?,
 ) {
     EmotionWithSelector(
         emotionSymbol = EmotionSymbol.Meh,
@@ -126,7 +126,7 @@ private fun MehEmotionWithSelector(
 @Composable
 private fun BadEmotionWithSelector(
     onEmotionPressed: (EmotionSymbol) -> Unit,
-    selection: EmotionSymbol,
+    selection: EmotionSymbol?,
 ) {
     EmotionWithSelector(
         emotionSymbol = EmotionSymbol.Bad,
@@ -138,7 +138,7 @@ private fun BadEmotionWithSelector(
 @Composable
 private fun AwfulEmotionWithSelector(
     onEmotionPressed: (EmotionSymbol) -> Unit,
-    selection: EmotionSymbol,
+    selection: EmotionSymbol?,
 ) {
     EmotionWithSelector(
         emotionSymbol = EmotionSymbol.Awful,

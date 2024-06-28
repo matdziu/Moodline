@@ -6,4 +6,5 @@
     <string name="emotion_symbol_awful_text">awful</string>
     <string name="emotion_picker_title">Pick how you felt today:</string>
     <string name="emotion_picker_no_selection_error">Please select an emotion by clicking on it</string>
+    <string name="text_field_with_char_limit_supporting_text">You\'ve exceeded maximum character limit</string>
 </resources>
