@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.moodline.android.library)
+    alias(libs.plugins.moodline.android.hilt)
 }
 
 android {
