@@ -6,6 +6,8 @@ import com.domain.repositories.DiaryEntriesRepository
 import com.storage.daos.DiaryEntryDao
 import com.storage.extensions.toDiaryEntry
 import com.storage.extensions.toDiaryEntryDb
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -21,5 +23,12 @@ internal class LocalStorageDiaryEntriesRepository @Inject constructor(
 
     override suspend fun add(entry: DiaryEntry) = withContext(coroutineDispatchersProvider.io()) {
         diaryEntryDao.insert(entry.toDiaryEntryDb())
+    }
+
+    override fun getAllFlow(): Flow<List<DiaryEntry>> {
+        return diaryEntryDao.getAllFlow()
+            .map { entries ->
+                entries.map { it.toDiaryEntry() }
+            }
     }
 }

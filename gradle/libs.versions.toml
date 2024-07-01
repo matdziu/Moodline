@@ -52,6 +52,7 @@ androidx-compose-icons-extended = { group = "androidx.compose.material", name = 
 kotlinx-collections-immutable = { group = "org.jetbrains.kotlinx", name = "kotlinx-collections-immutable", version.ref = "kotlinxCollectionImmutable" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

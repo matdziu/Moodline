@@ -32,6 +32,8 @@ fun MoodlineNavHost(
         improveRoute(
             onBackButtonPressed = { navigateToDiary() }
         )
-        addEntryRoute()
+        addEntryRoute(
+            onBackButtonPressed = { navController.navigateUp() }
+        )
     }
 }

@@ -2,6 +2,7 @@ package com.addentry
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.domain.entities.DiaryEntry
 import com.domain.entities.Emotion
 import com.domain.repositories.DiaryEntriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,6 +32,8 @@ class AddEntryViewModel @Inject constructor(
         when (event) {
             is AddEntryUIEvent.EmotionSelected -> handleEmotionSelected(event.emotion)
             is AddEntryUIEvent.DiaryEntryTextChanged -> handleDiaryEntryTextChanged(event.newText)
+            AddEntryUIEvent.AddButtonPressed -> handleAddButtonPressed()
+            AddEntryUIEvent.CancelButtonPressed -> handleCancelButtonPressed()
         }
     }
 
@@ -37,7 +41,8 @@ class AddEntryViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update {
                 it.copy(
-                    selectedEmotion = emotion
+                    selectedEmotion = emotion,
+                    emotionNotSelectedError = false,
                 )
             }
         }
@@ -50,6 +55,53 @@ class AddEntryViewModel @Inject constructor(
                     diaryEntryText = newText,
                 )
             }
+        }
+    }
+
+    private fun handleAddButtonPressed() {
+        val currentState = state.value
+        val selectedEmotion = currentState.selectedEmotion
+        val diaryEntryText = currentState.diaryEntryText
+
+        viewModelScope.launch {
+
+            if (selectedEmotion == null) {
+
+                _state.update {
+                    it.copy(
+                        progress = false,
+                        emotionNotSelectedError = true,
+                    )
+                }
+
+            } else {
+
+                _state.update {
+                    it.copy(
+                        progress = true,
+                    )
+                }
+
+                diaryEntriesRepository.add(
+                    DiaryEntry(
+                        emotion = selectedEmotion,
+                        entryText = diaryEntryText,
+                        createdAt = LocalDateTime.now(),
+                    )
+                )
+
+                _state.update {
+                    it.copy(progress = false)
+                }
+
+                _navigationEvents.emit(AddEntryNavigationEvent.CloseScreen)
+            }
+        }
+    }
+
+    private fun handleCancelButtonPressed() {
+        viewModelScope.launch {
+            _navigationEvents.emit(AddEntryNavigationEvent.CloseScreen)
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.addentry
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.common.constants.MAX_CHAR_LENGTH_OF_DIARY_ENTRY
 import com.designsystem.components.EmotionPicker
 import com.designsystem.components.EmotionSymbol
+import com.designsystem.components.FullScreenProgressIndicator
 import com.designsystem.components.MoodlineButton
 import com.designsystem.components.MoodlineOutlinedButton
 import com.designsystem.components.TextFieldWithCharLimit
@@ -30,7 +32,8 @@ import com.designsystem.extensions.toEmotionSymbol
 
 @Composable
 internal fun AddEntryRoute(
-    addEntryViewModel: AddEntryViewModel = hiltViewModel()
+    addEntryViewModel: AddEntryViewModel = hiltViewModel(),
+    onBackButtonPressed: () -> Unit,
 ) {
     val state by addEntryViewModel.state.collectAsStateWithLifecycle()
     val navEvents by addEntryViewModel.navigationEvents.collectAsStateWithLifecycle(
@@ -40,6 +43,10 @@ internal fun AddEntryRoute(
     when (navEvents) {
 
         AddEntryNavigationEvent.Default -> { /* do nothing */
+        }
+
+        AddEntryNavigationEvent.CloseScreen -> {
+            onBackButtonPressed()
         }
     }
 
@@ -52,6 +59,12 @@ internal fun AddEntryRoute(
                     it
                 )
             )
+        },
+        onAddButtonPressed = {
+            addEntryViewModel.onEvent(AddEntryUIEvent.AddButtonPressed)
+        },
+        onCancelButtonPressed = {
+            addEntryViewModel.onEvent(AddEntryUIEvent.CancelButtonPressed)
         }
     )
 }
@@ -61,46 +74,55 @@ internal fun AddEntryScreen(
     addEntryUIState: AddEntryUIState,
     onEmotionPressed: (EmotionSymbol) -> Unit,
     onDiaryEntryTextChanged: (String) -> Unit,
+    onAddButtonPressed: () -> Unit,
+    onCancelButtonPressed: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp, vertical = 32.dp)
-    ) {
-        EmotionPicker(
-            selection = addEntryUIState.selectedEmotion?.toEmotionSymbol(),
-            onEmotionPressed = onEmotionPressed,
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-        Text(
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.diary_entry_text_title),
-            textAlign = TextAlign.Center
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        TextFieldWithCharLimit(
-            modifier = Modifier.height(300.dp),
-            value = addEntryUIState.diaryEntryText,
-            hint = stringResource(id = R.string.diary_entry_text_hint),
-            onValueChange = onDiaryEntryTextChanged,
-            maxCharLimit = MAX_CHAR_LENGTH_OF_DIARY_ENTRY,
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-        MoodlineButton(
-            text = stringResource(id = R.string.add_entry_save_button),
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column(
             modifier = Modifier
-                .width(150.dp)
-                .align(Alignment.CenterHorizontally),
-            onClick = { /*TODO*/ }
-        )
-        Spacer(modifier = Modifier.height(8.dp))
-        MoodlineOutlinedButton(
-            text = stringResource(id = R.string.cancel_entry_save_button),
-            modifier = Modifier
-                .width(150.dp)
-                .align(Alignment.CenterHorizontally),
-            onClick = { /*TODO*/ }
-        )
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp, vertical = 32.dp)
+        ) {
+            EmotionPicker(
+                selection = addEntryUIState.selectedEmotion?.toEmotionSymbol(),
+                onEmotionPressed = onEmotionPressed,
+                noSelectionError = addEntryUIState.emotionNotSelectedError
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(id = R.string.diary_entry_text_title),
+                textAlign = TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            TextFieldWithCharLimit(
+                modifier = Modifier.height(300.dp),
+                value = addEntryUIState.diaryEntryText,
+                hint = stringResource(id = R.string.diary_entry_text_hint),
+                onValueChange = onDiaryEntryTextChanged,
+                maxCharLimit = MAX_CHAR_LENGTH_OF_DIARY_ENTRY,
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            MoodlineButton(
+                text = stringResource(id = R.string.add_entry_save_button),
+                modifier = Modifier
+                    .width(150.dp)
+                    .align(Alignment.CenterHorizontally),
+                onClick = onAddButtonPressed,
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            MoodlineOutlinedButton(
+                text = stringResource(id = R.string.cancel_entry_save_button),
+                modifier = Modifier
+                    .width(150.dp)
+                    .align(Alignment.CenterHorizontally),
+                onClick = onCancelButtonPressed,
+            )
+        }
+
+        if (addEntryUIState.progress) {
+            FullScreenProgressIndicator()
+        }
     }
 }

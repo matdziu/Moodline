@@ -31,6 +31,7 @@ internal class DiaryViewModel @Inject constructor(
         when (event) {
             DiaryUIEvent.Initialize -> handleInitializeEvent()
             DiaryUIEvent.AddEntryButtonPressed -> handleAddEntryButtonPressed()
+            DiaryUIEvent.Refresh -> handleRefreshEvent()
         }
     }
 
@@ -38,6 +39,14 @@ internal class DiaryViewModel @Inject constructor(
         _state.update {
             it.copy(progress = true)
         }
+        fetchDiaryEntries()
+    }
+
+    private fun handleRefreshEvent() {
+        fetchDiaryEntries()
+    }
+
+    private fun fetchDiaryEntries() {
         viewModelScope.launch {
             _state.update {
                 it.copy(

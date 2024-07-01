@@ -63,11 +63,6 @@ internal fun DiaryScreen(
     addEntryButtonPressed: () -> Unit = {},
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
-
-        if (diaryUIState.progress) {
-            FullScreenProgressIndicator()
-        }
-
         if (diaryUIState.entries.isEmpty() && !diaryUIState.progress) {
             Text(
                 modifier = Modifier
@@ -103,6 +98,11 @@ internal fun DiaryScreen(
             onClick = addEntryButtonPressed,
         ) {
             Icon(Icons.Filled.Add, contentDescription = null)
+        }
+
+
+        if (diaryUIState.progress) {
+            FullScreenProgressIndicator()
         }
     }
 }

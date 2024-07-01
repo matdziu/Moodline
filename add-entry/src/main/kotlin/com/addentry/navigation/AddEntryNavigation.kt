@@ -14,8 +14,8 @@ fun NavController.navigateToAddEntry(
     this.navigate(addEntryRoute, navOptions)
 }
 
-fun NavGraphBuilder.addEntryRoute() {
+fun NavGraphBuilder.addEntryRoute(onBackButtonPressed: () -> Unit) {
     composable(route = addEntryRoute) {
-        AddEntryRoute()
+        AddEntryRoute(onBackButtonPressed = onBackButtonPressed)
     }
 }
