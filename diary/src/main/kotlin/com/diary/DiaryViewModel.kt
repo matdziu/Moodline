@@ -3,8 +3,10 @@ package com.diary
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.diary.extensions.toDiaryItem
+import com.domain.entities.DiaryEntry
 import com.domain.repositories.DiaryEntriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -40,6 +42,16 @@ internal class DiaryViewModel @Inject constructor(
             it.copy(progress = true)
         }
         fetchDiaryEntries()
+
+        viewModelScope.launch {
+            diaryEntriesRepository.getAllFlow().collect { newDiaryEntries ->
+                _state.update {
+                    it.copy(
+                        entries = newDiaryEntries.diaryEntriesToListItems()
+                    )
+                }
+            }
+        }
     }
 
     private fun handleRefreshEvent() {
@@ -53,8 +65,7 @@ internal class DiaryViewModel @Inject constructor(
                     progress = false,
                     entries = diaryEntriesRepository
                         .getAll()
-                        .map { entry -> entry.toDiaryItem() }
-                        .toPersistentList()
+                        .diaryEntriesToListItems()
                 )
             }
         }
@@ -64,5 +75,11 @@ internal class DiaryViewModel @Inject constructor(
         viewModelScope.launch {
             _navigationEvents.emit(DiaryNavigationEvent.GoToAddEntry)
         }
+    }
+
+    private fun List<DiaryEntry>.diaryEntriesToListItems(): ImmutableList<DiaryItem> {
+        return sortedByDescending { entry -> entry.createdAt }
+            .map { entry -> entry.toDiaryItem() }
+            .toPersistentList()
     }
 }

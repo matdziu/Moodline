@@ -2,6 +2,7 @@ package com.addentry
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.common.constants.MAX_CHAR_LENGTH_OF_DIARY_ENTRY
 import com.domain.entities.DiaryEntry
 import com.domain.entities.Emotion
 import com.domain.repositories.DiaryEntriesRepository
@@ -38,65 +39,56 @@ class AddEntryViewModel @Inject constructor(
     }
 
     private fun handleEmotionSelected(emotion: Emotion) {
-        viewModelScope.launch {
-            _state.update {
-                it.copy(
-                    selectedEmotion = emotion,
-                    emotionNotSelectedError = false,
-                )
-            }
+        _state.update {
+            it.copy(
+                selectedEmotion = emotion,
+                emotionNotSelectedError = false,
+            )
         }
     }
 
     private fun handleDiaryEntryTextChanged(newText: String) {
-        viewModelScope.launch {
-            _state.update {
-                it.copy(
-                    diaryEntryText = newText,
-                )
-            }
+        _state.update {
+            it.copy(
+                diaryEntryText = newText,
+            )
         }
     }
 
-    private fun handleAddButtonPressed() {
+    private fun handleAddButtonPressed() = viewModelScope.launch {
         val currentState = state.value
         val selectedEmotion = currentState.selectedEmotion
         val diaryEntryText = currentState.diaryEntryText
 
-        viewModelScope.launch {
-
-            if (selectedEmotion == null) {
-
-                _state.update {
-                    it.copy(
-                        progress = false,
-                        emotionNotSelectedError = true,
-                    )
-                }
-
-            } else {
-
-                _state.update {
-                    it.copy(
-                        progress = true,
-                    )
-                }
-
-                diaryEntriesRepository.add(
-                    DiaryEntry(
-                        emotion = selectedEmotion,
-                        entryText = diaryEntryText,
-                        createdAt = LocalDateTime.now(),
-                    )
+        if (selectedEmotion == null) {
+            _state.update {
+                it.copy(
+                    progress = false,
+                    emotionNotSelectedError = true,
                 )
-
-                _state.update {
-                    it.copy(progress = false)
-                }
-
-                _navigationEvents.emit(AddEntryNavigationEvent.CloseScreen)
             }
+            return@launch
         }
+
+        if (diaryEntryText.length > MAX_CHAR_LENGTH_OF_DIARY_ENTRY) {
+            return@launch
+        }
+
+        _state.update {
+            it.copy(
+                progress = true,
+            )
+        }
+
+        diaryEntriesRepository.add(
+            DiaryEntry(
+                emotion = selectedEmotion,
+                entryText = diaryEntryText,
+                createdAt = LocalDateTime.now(),
+            )
+        )
+
+        _navigationEvents.emit(AddEntryNavigationEvent.CloseScreen)
     }
 
     private fun handleCancelButtonPressed() {
