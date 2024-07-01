@@ -9,10 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,6 +22,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.common.constants.MAX_CHAR_LENGTH_OF_DIARY_ENTRY
 import com.designsystem.components.EmotionPicker
 import com.designsystem.components.EmotionSymbol
+import com.designsystem.components.MoodlineButton
+import com.designsystem.components.MoodlineOutlinedButton
 import com.designsystem.components.TextFieldWithCharLimit
 import com.designsystem.extensions.toEmotion
 import com.designsystem.extensions.toEmotionSymbol
@@ -88,32 +87,20 @@ internal fun AddEntryScreen(
             maxCharLimit = MAX_CHAR_LENGTH_OF_DIARY_ENTRY,
         )
         Spacer(modifier = Modifier.height(32.dp))
-        Button(
+        MoodlineButton(
+            text = stringResource(id = R.string.add_entry_save_button),
             modifier = Modifier
                 .width(150.dp)
                 .align(Alignment.CenterHorizontally),
             onClick = { /*TODO*/ }
-        ) {
-            Text(
-                modifier = Modifier.align(Alignment.CenterVertically),
-                text = stringResource(id = R.string.add_entry_save_button),
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelLarge
-            )
-        }
+        )
         Spacer(modifier = Modifier.height(8.dp))
-        TextButton(
+        MoodlineOutlinedButton(
+            text = stringResource(id = R.string.cancel_entry_save_button),
             modifier = Modifier
                 .width(150.dp)
                 .align(Alignment.CenterHorizontally),
             onClick = { /*TODO*/ }
-        ) {
-            Text(
-                modifier = Modifier.align(Alignment.CenterVertically),
-                text = stringResource(id = R.string.cancel_entry_save_button),
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelLarge
-            )
-        }
+        )
     }
 }
