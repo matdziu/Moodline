@@ -37,15 +37,15 @@ internal fun AddEntryRoute(
 ) {
     val state by addEntryViewModel.state.collectAsStateWithLifecycle()
     val navEvents by addEntryViewModel.navigationEvents.collectAsStateWithLifecycle(
-        initialValue = AddEntryNavigationEvent.Default,
+        initialValue = AddEntryNavigationEvent.Default(),
     )
 
     when (navEvents) {
 
-        AddEntryNavigationEvent.Default -> { /* do nothing */
+        is AddEntryNavigationEvent.Default -> { /* do nothing */
         }
 
-        AddEntryNavigationEvent.CloseScreen -> {
+        is AddEntryNavigationEvent.CloseScreen -> {
             onBackButtonPressed()
         }
     }

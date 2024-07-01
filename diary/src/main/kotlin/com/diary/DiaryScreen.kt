@@ -34,13 +34,13 @@ internal fun DiaryRoute(
 ) {
     val state by diaryViewModel.state.collectAsStateWithLifecycle()
     val navEvents by diaryViewModel.navigationEvents.collectAsStateWithLifecycle(
-        initialValue = DiaryNavigationEvent.Default,
+        initialValue = DiaryNavigationEvent.Default(),
     )
 
     when (navEvents) {
-        DiaryNavigationEvent.GoToAddEntry -> navigateToAddEntry()
+        is DiaryNavigationEvent.GoToAddEntry -> navigateToAddEntry()
 
-        DiaryNavigationEvent.Default -> { /* do nothing */
+        is DiaryNavigationEvent.Default -> { /* do nothing */
         }
     }
 

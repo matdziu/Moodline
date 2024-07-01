@@ -73,7 +73,7 @@ internal class DiaryViewModel @Inject constructor(
 
     private fun handleAddEntryButtonPressed() {
         viewModelScope.launch {
-            _navigationEvents.emit(DiaryNavigationEvent.GoToAddEntry)
+            _navigationEvents.emit(DiaryNavigationEvent.GoToAddEntry())
         }
     }
 

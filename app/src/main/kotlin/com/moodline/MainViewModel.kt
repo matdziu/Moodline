@@ -42,7 +42,7 @@ class MainViewModel @Inject constructor(
     private fun handleDiaryBottomNavIconPressed() {
         savedStateHandle[SELECTED_NAV_ITEM_ID_KEY] = BottomNavBarId.DIARY
         viewModelScope.launch {
-            _navigationEvents.emit(MainNavigationEvent.GoToDiary)
+            _navigationEvents.emit(MainNavigationEvent.GoToDiary())
         }
         _state.update {
             it.copy(
@@ -54,7 +54,7 @@ class MainViewModel @Inject constructor(
     private fun handleImproveBottomNavIconPressed() {
         savedStateHandle[SELECTED_NAV_ITEM_ID_KEY] = BottomNavBarId.IMPROVE
         viewModelScope.launch {
-            _navigationEvents.emit(MainNavigationEvent.GoToImprove)
+            _navigationEvents.emit(MainNavigationEvent.GoToImprove())
         }
         _state.update {
             it.copy(
@@ -66,7 +66,7 @@ class MainViewModel @Inject constructor(
     private fun handleStatsBottomNavIconPressed() {
         savedStateHandle[SELECTED_NAV_ITEM_ID_KEY] = BottomNavBarId.STATS
         viewModelScope.launch {
-            _navigationEvents.emit(MainNavigationEvent.GoToStats)
+            _navigationEvents.emit(MainNavigationEvent.GoToStats())
         }
         _state.update {
             it.copy(

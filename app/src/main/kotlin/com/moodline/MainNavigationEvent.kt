@@ -2,11 +2,11 @@ package com.moodline
 
 sealed interface MainNavigationEvent {
 
-    data object Default: MainNavigationEvent
+    class Default: MainNavigationEvent
 
-    data object GoToDiary: MainNavigationEvent
+    class GoToDiary: MainNavigationEvent
 
-    data object GoToStats: MainNavigationEvent
+    class GoToStats: MainNavigationEvent
 
-    data object GoToImprove: MainNavigationEvent
+    class GoToImprove: MainNavigationEvent
 }

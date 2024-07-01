@@ -33,27 +33,27 @@ class MainActivity : ComponentActivity() {
 
             val state by mainViewModel.state.collectAsStateWithLifecycle()
             val navEvents by mainViewModel.navigationEvents.collectAsStateWithLifecycle(
-                initialValue = MainNavigationEvent.Default,
+                initialValue = MainNavigationEvent.Default(),
             )
 
             when (navEvents) {
 
-                MainNavigationEvent.GoToDiary -> navigateToBottomNavDestination(
+                is MainNavigationEvent.GoToDiary -> navigateToBottomNavDestination(
                     route = diaryRoute,
                     navController = navController,
                 )
 
-                MainNavigationEvent.GoToImprove -> navigateToBottomNavDestination(
+                is MainNavigationEvent.GoToImprove -> navigateToBottomNavDestination(
                     route = improveRoute,
                     navController = navController,
                 )
 
-                MainNavigationEvent.GoToStats -> navigateToBottomNavDestination(
+                is MainNavigationEvent.GoToStats -> navigateToBottomNavDestination(
                     route = statsRoute,
                     navController = navController,
                 )
 
-                MainNavigationEvent.Default -> {
+                is MainNavigationEvent.Default -> {
                     // do nothing
                 }
             }

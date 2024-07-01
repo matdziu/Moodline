@@ -88,12 +88,12 @@ class AddEntryViewModel @Inject constructor(
             )
         )
 
-        _navigationEvents.emit(AddEntryNavigationEvent.CloseScreen)
+        _navigationEvents.emit(AddEntryNavigationEvent.CloseScreen())
     }
 
     private fun handleCancelButtonPressed() {
         viewModelScope.launch {
-            _navigationEvents.emit(AddEntryNavigationEvent.CloseScreen)
+            _navigationEvents.emit(AddEntryNavigationEvent.CloseScreen())
         }
     }
 }
