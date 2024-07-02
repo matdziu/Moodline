@@ -29,11 +29,18 @@ class AddEntryViewModel @Inject constructor(
     private val _navigationEvents: MutableSharedFlow<AddEntryNavigationEvent> = MutableSharedFlow()
     val navigationEvents: SharedFlow<AddEntryNavigationEvent> = _navigationEvents.asSharedFlow()
 
+    private var entryAddingInProgress = false
+
     fun onEvent(event: AddEntryUIEvent) {
         when (event) {
             is AddEntryUIEvent.EmotionSelected -> handleEmotionSelected(event.emotion)
             is AddEntryUIEvent.DiaryEntryTextChanged -> handleDiaryEntryTextChanged(event.newText)
-            AddEntryUIEvent.AddButtonPressed -> handleAddButtonPressed()
+            AddEntryUIEvent.AddButtonPressed -> {
+                if (!entryAddingInProgress) {
+                    entryAddingInProgress = true
+                    handleAddButtonPressed()
+                }
+            }
             AddEntryUIEvent.CancelButtonPressed -> handleCancelButtonPressed()
         }
     }
@@ -63,14 +70,15 @@ class AddEntryViewModel @Inject constructor(
         if (selectedEmotion == null) {
             _state.update {
                 it.copy(
-                    progress = false,
                     emotionNotSelectedError = true,
                 )
             }
+            entryAddingInProgress = false
             return@launch
         }
 
         if (diaryEntryText.length > MAX_CHAR_LENGTH_OF_DIARY_ENTRY) {
+            entryAddingInProgress = false
             return@launch
         }
 
@@ -87,6 +95,8 @@ class AddEntryViewModel @Inject constructor(
                 createdAt = LocalDateTime.now(),
             )
         )
+
+        entryAddingInProgress = false
 
         _navigationEvents.emit(AddEntryNavigationEvent.CloseScreen)
     }
