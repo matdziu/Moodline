@@ -51,7 +51,7 @@ fun MoodlineDatePicker(
             textAlign = TextAlign.Center,
             modifier = Modifier.weight(0.5f)
         )
-        Spacer(modifier = Modifier.width(16.dp))
+        Spacer(modifier = Modifier.width(8.dp))
         MoodlineButton(
             modifier = Modifier.weight(0.5f),
             text = stringResource(id = R.string.date_picker_button_text),
