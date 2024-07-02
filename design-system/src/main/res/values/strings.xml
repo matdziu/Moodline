@@ -7,4 +7,7 @@
     <string name="emotion_picker_title">Pick how you felt today:</string>
     <string name="emotion_picker_no_selection_error">Please select an emotion by clicking on it</string>
     <string name="text_field_with_char_limit_supporting_text">You\'ve exceeded maximum character limit</string>
+    <string name="date_picker_button_text">Change date</string>
+    <string name="date_picker_button_positive">OK</string>
+    <string name="date_picker_button_dismiss">Cancel</string>
 </resources>

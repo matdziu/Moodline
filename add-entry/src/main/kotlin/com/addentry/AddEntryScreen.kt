@@ -27,6 +27,7 @@ import com.designsystem.components.EmotionPicker
 import com.designsystem.components.EmotionSymbol
 import com.designsystem.components.FullScreenProgressIndicator
 import com.designsystem.components.MoodlineButton
+import com.designsystem.components.MoodlineDatePicker
 import com.designsystem.components.MoodlineOutlinedButton
 import com.designsystem.components.TextFieldWithCharLimit
 import com.designsystem.extensions.toEmotion
@@ -81,6 +82,7 @@ internal fun AddEntryScreen(
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
@@ -90,6 +92,10 @@ internal fun AddEntryScreen(
                 selection = addEntryUIState.selectedEmotion?.toEmotionSymbol(),
                 onEmotionPressed = onEmotionPressed,
                 noSelectionError = addEntryUIState.emotionNotSelectedError
+            )
+            Spacer(modifier = Modifier.height(32.dp))
+            MoodlineDatePicker(
+                onDateSelected = {},
             )
             Spacer(modifier = Modifier.height(32.dp))
             Text(
