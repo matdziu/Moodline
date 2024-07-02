@@ -10,4 +10,7 @@
     <string name="date_picker_button_text">Change date</string>
     <string name="date_picker_button_positive">OK</string>
     <string name="date_picker_button_dismiss">Cancel</string>
+    <string name="time_picker_button_text">Change time</string>
+    <string name="time_picker_button_positive">OK</string>
+    <string name="time_picker_button_dismiss">Cancel</string>
 </resources>

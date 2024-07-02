@@ -15,7 +15,9 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,6 +33,9 @@ class AddEntryViewModel @Inject constructor(
 
     private var entryAddingInProgress = false
 
+    private var selectedLocalDate = LocalDate.now()
+    private var selectedLocalTime = LocalTime.now()
+
     fun onEvent(event: AddEntryUIEvent) {
         when (event) {
             is AddEntryUIEvent.EmotionSelected -> handleEmotionSelected(event.emotion)
@@ -41,7 +46,10 @@ class AddEntryViewModel @Inject constructor(
                     handleAddButtonPressed()
                 }
             }
+
             AddEntryUIEvent.CancelButtonPressed -> handleCancelButtonPressed()
+            is AddEntryUIEvent.DateSelected -> handleDateSelected(event.localDate)
+            is AddEntryUIEvent.TimeSelected -> handleTimeSelected(event.localTime)
         }
     }
 
@@ -92,13 +100,21 @@ class AddEntryViewModel @Inject constructor(
             DiaryEntry(
                 emotion = selectedEmotion,
                 entryText = diaryEntryText,
-                createdAt = LocalDateTime.now(),
+                createdAt = LocalDateTime.of(selectedLocalDate, selectedLocalTime),
             )
         )
 
         entryAddingInProgress = false
 
         _navigationEvents.emit(AddEntryNavigationEvent.CloseScreen)
+    }
+
+    private fun handleDateSelected(localDate: LocalDate) {
+        selectedLocalDate = localDate
+    }
+
+    private fun handleTimeSelected(localTime: LocalTime) {
+        selectedLocalTime = localTime
     }
 
     private fun handleCancelButtonPressed() {

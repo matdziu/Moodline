@@ -21,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.common.constants.COMMON_DATE_FORMAT
+import com.common.extensions.toMillis
 import com.designsystem.R
 import com.designsystem.theme.MoodlineTheme
 import java.time.Instant
@@ -38,13 +39,11 @@ fun MoodlineDatePicker(
     val now = LocalDateTime.now()
     val dateTimeFormatter = DateTimeFormatter.ofPattern(COMMON_DATE_FORMAT)
     val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = now
-            .atZone(ZoneId.systemDefault())
-            .toInstant()
-            .toEpochMilli()
+        initialSelectedDateMillis = now.toMillis()
     )
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
     var formattedDate by rememberSaveable { mutableStateOf(now.format(dateTimeFormatter)) }
+    var selectedDate by rememberSaveable { mutableStateOf(now) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -52,15 +51,18 @@ fun MoodlineDatePicker(
     ) {
         Text(
             text = formattedDate,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            modifier = Modifier.weight(0.5f)
         )
         Spacer(modifier = Modifier.width(16.dp))
         MoodlineButton(
+            modifier = Modifier.weight(0.5f),
             text = stringResource(id = R.string.date_picker_button_text),
             onClick = { showDatePicker = true })
     }
 
     if (showDatePicker) {
+        datePickerState.selectedDateMillis = selectedDate.toMillis()
         DatePickerDialog(
             onDismissRequest = { showDatePicker = false },
             confirmButton = {
@@ -70,12 +72,12 @@ fun MoodlineDatePicker(
                         showDatePicker = false
                         val selectedDateMillis = datePickerState.selectedDateMillis
                         if (selectedDateMillis != null) {
-                            val selectedDate = Instant
+                            selectedDate = Instant
                                 .ofEpochMilli(selectedDateMillis)
                                 .atZone(ZoneId.systemDefault())
-                                .toLocalDate()
+                                .toLocalDateTime()
                             formattedDate = selectedDate.format(dateTimeFormatter)
-                            onDateSelected(selectedDate)
+                            onDateSelected(selectedDate.toLocalDate())
                         }
                     }
                 )

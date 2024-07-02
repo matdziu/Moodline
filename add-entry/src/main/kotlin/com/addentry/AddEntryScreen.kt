@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
@@ -29,9 +28,12 @@ import com.designsystem.components.FullScreenProgressIndicator
 import com.designsystem.components.MoodlineButton
 import com.designsystem.components.MoodlineDatePicker
 import com.designsystem.components.MoodlineOutlinedButton
+import com.designsystem.components.MoodlineTimePicker
 import com.designsystem.components.TextFieldWithCharLimit
 import com.designsystem.extensions.toEmotion
 import com.designsystem.extensions.toEmotionSymbol
+import java.time.LocalDate
+import java.time.LocalTime
 
 @Composable
 internal fun AddEntryRoute(
@@ -68,6 +70,12 @@ internal fun AddEntryRoute(
         },
         onCancelButtonPressed = {
             addEntryViewModel.onEvent(AddEntryUIEvent.CancelButtonPressed)
+        },
+        onDateSelected = {
+            addEntryViewModel.onEvent(AddEntryUIEvent.DateSelected(it))
+        },
+        onTimeSelected = {
+            addEntryViewModel.onEvent(AddEntryUIEvent.TimeSelected(it))
         }
     )
 }
@@ -79,6 +87,8 @@ internal fun AddEntryScreen(
     onDiaryEntryTextChanged: (String) -> Unit,
     onAddButtonPressed: () -> Unit,
     onCancelButtonPressed: () -> Unit,
+    onDateSelected: (LocalDate) -> Unit,
+    onTimeSelected: (LocalTime) -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -95,7 +105,11 @@ internal fun AddEntryScreen(
             )
             Spacer(modifier = Modifier.height(32.dp))
             MoodlineDatePicker(
-                onDateSelected = {},
+                onDateSelected = onDateSelected,
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            MoodlineTimePicker(
+                onTimeSelected = onTimeSelected,
             )
             Spacer(modifier = Modifier.height(32.dp))
             Text(
@@ -115,7 +129,7 @@ internal fun AddEntryScreen(
             MoodlineButton(
                 text = stringResource(id = R.string.add_entry_save_button),
                 modifier = Modifier
-                    .width(150.dp)
+                    .fillMaxWidth()
                     .align(Alignment.CenterHorizontally),
                 onClick = onAddButtonPressed,
             )
@@ -123,7 +137,7 @@ internal fun AddEntryScreen(
             MoodlineOutlinedButton(
                 text = stringResource(id = R.string.cancel_entry_save_button),
                 modifier = Modifier
-                    .width(150.dp)
+                    .fillMaxWidth()
                     .align(Alignment.CenterHorizontally),
                 onClick = onCancelButtonPressed,
             )
