@@ -16,11 +16,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.common.extensions.launchAndRepeatOnLifecycle
 import com.designsystem.components.DiaryListItem
 import com.designsystem.components.FullScreenProgressIndicator
 import com.designsystem.components.OneTimeLaunchedEffect
@@ -33,14 +35,15 @@ internal fun DiaryRoute(
     diaryViewModel: DiaryViewModel = hiltViewModel(),
 ) {
     val state by diaryViewModel.state.collectAsStateWithLifecycle()
-    val navEvents by diaryViewModel.navigationEvents.collectAsStateWithLifecycle(
-        initialValue = DiaryNavigationEvent.Default(),
-    )
 
-    when (navEvents) {
-        is DiaryNavigationEvent.GoToAddEntry -> navigateToAddEntry()
+    LocalLifecycleOwner.current.launchAndRepeatOnLifecycle {
+        diaryViewModel.navigationEvents.collect {
+            when (it) {
+                DiaryNavigationEvent.GoToAddEntry -> navigateToAddEntry()
 
-        is DiaryNavigationEvent.Default -> { /* do nothing */
+                DiaryNavigationEvent.Default -> { /* do nothing */
+                }
+            }
         }
     }
 

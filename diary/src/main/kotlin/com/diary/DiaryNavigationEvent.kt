@@ -2,7 +2,7 @@ package com.diary
 
 sealed interface DiaryNavigationEvent {
 
-    class Default : DiaryNavigationEvent
+    data object Default : DiaryNavigationEvent
 
-    class GoToAddEntry : DiaryNavigationEvent
+    data object GoToAddEntry : DiaryNavigationEvent
 }

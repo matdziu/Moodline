@@ -15,12 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.common.constants.MAX_CHAR_LENGTH_OF_DIARY_ENTRY
+import com.common.extensions.launchAndRepeatOnLifecycle
 import com.designsystem.components.EmotionPicker
 import com.designsystem.components.EmotionSymbol
 import com.designsystem.components.FullScreenProgressIndicator
@@ -36,17 +38,17 @@ internal fun AddEntryRoute(
     onBackButtonPressed: () -> Unit,
 ) {
     val state by addEntryViewModel.state.collectAsStateWithLifecycle()
-    val navEvents by addEntryViewModel.navigationEvents.collectAsStateWithLifecycle(
-        initialValue = AddEntryNavigationEvent.Default(),
-    )
 
-    when (navEvents) {
+    LocalLifecycleOwner.current.launchAndRepeatOnLifecycle {
+        addEntryViewModel.navigationEvents.collect {
+            when (it) {
+                is AddEntryNavigationEvent.Default -> { /* do nothing */
+                }
 
-        is AddEntryNavigationEvent.Default -> { /* do nothing */
-        }
-
-        is AddEntryNavigationEvent.CloseScreen -> {
-            onBackButtonPressed()
+                is AddEntryNavigationEvent.CloseScreen -> {
+                    onBackButtonPressed()
+                }
+            }
         }
     }
 

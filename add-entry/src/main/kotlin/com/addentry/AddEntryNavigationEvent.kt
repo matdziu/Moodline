@@ -2,7 +2,7 @@ package com.addentry
 
 sealed interface AddEntryNavigationEvent {
 
-    class Default : AddEntryNavigationEvent
+    data object Default : AddEntryNavigationEvent
 
-    class CloseScreen: AddEntryNavigationEvent
+    data object CloseScreen: AddEntryNavigationEvent
 }
