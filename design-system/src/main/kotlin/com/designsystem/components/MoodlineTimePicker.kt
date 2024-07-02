@@ -33,11 +33,6 @@ fun MoodlineTimePicker(
 ) {
     val now = LocalTime.now()
     val timeFormatter = DateTimeFormatter.ofPattern(COMMON_TIME_FORMAT)
-    var timePickerState = rememberTimePickerState(
-        initialHour = now.hour,
-        initialMinute = now.minute,
-        is24Hour = true,
-    )
     var showTimePicker by rememberSaveable { mutableStateOf(false) }
     var formattedTime by rememberSaveable { mutableStateOf(now.format(timeFormatter)) }
     var selectedTime by rememberSaveable { mutableStateOf(now) }
@@ -59,7 +54,7 @@ fun MoodlineTimePicker(
     }
 
     if (showTimePicker) {
-        timePickerState = rememberTimePickerState(
+        val timePickerState = rememberTimePickerState(
             initialHour = selectedTime.hour,
             initialMinute = selectedTime.minute,
             is24Hour = true,

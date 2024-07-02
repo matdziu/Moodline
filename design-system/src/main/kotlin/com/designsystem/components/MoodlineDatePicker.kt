@@ -38,9 +38,6 @@ fun MoodlineDatePicker(
 ) {
     val now = LocalDateTime.now()
     val dateTimeFormatter = DateTimeFormatter.ofPattern(COMMON_DATE_FORMAT)
-    val datePickerState = rememberDatePickerState(
-        initialSelectedDateMillis = now.toMillis()
-    )
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
     var formattedDate by rememberSaveable { mutableStateOf(now.format(dateTimeFormatter)) }
     var selectedDate by rememberSaveable { mutableStateOf(now) }
@@ -62,7 +59,9 @@ fun MoodlineDatePicker(
     }
 
     if (showDatePicker) {
-        datePickerState.selectedDateMillis = selectedDate.toMillis()
+        val datePickerState = rememberDatePickerState(
+            initialSelectedDateMillis = selectedDate.toMillis()
+        )
         DatePickerDialog(
             onDismissRequest = { showDatePicker = false },
             confirmButton = {
