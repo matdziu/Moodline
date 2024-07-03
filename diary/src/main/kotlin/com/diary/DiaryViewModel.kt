@@ -32,7 +32,6 @@ internal class DiaryViewModel @Inject constructor(
     fun onEvent(event: DiaryUIEvent) {
         when (event) {
             DiaryUIEvent.Initialize -> handleInitializeEvent()
-            DiaryUIEvent.AddEntryButtonPressed -> handleAddEntryButtonPressed()
             DiaryUIEvent.Refresh -> handleRefreshEvent()
         }
     }
@@ -68,12 +67,6 @@ internal class DiaryViewModel @Inject constructor(
                         .diaryEntriesToListItems()
                 )
             }
-        }
-    }
-
-    private fun handleAddEntryButtonPressed() {
-        viewModelScope.launch {
-            _navigationEvents.emit(DiaryNavigationEvent.GoToAddEntry)
         }
     }
 

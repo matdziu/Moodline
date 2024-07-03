@@ -39,8 +39,6 @@ internal fun DiaryRoute(
     LocalLifecycleOwner.current.launchAndRepeatOnLifecycle {
         diaryViewModel.navigationEvents.collect {
             when (it) {
-                DiaryNavigationEvent.GoToAddEntry -> navigateToAddEntry()
-
                 DiaryNavigationEvent.Default -> { /* do nothing */
                 }
             }
@@ -56,7 +54,7 @@ internal fun DiaryRoute(
     }
     DiaryScreen(
         diaryUIState = state,
-        addEntryButtonPressed = { diaryViewModel.onEvent(DiaryUIEvent.AddEntryButtonPressed) },
+        addEntryButtonPressed = navigateToAddEntry,
     )
 }
 
