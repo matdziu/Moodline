@@ -13,4 +13,9 @@
     <string name="time_picker_button_text">Change time</string>
     <string name="time_picker_button_positive">OK</string>
     <string name="time_picker_button_dismiss">Cancel</string>
+    <string name="diary_list_item_edit">Edit</string>
+    <string name="diary_list_item_remove">Remove</string>
+    <string name="diary_removal_confirmation_positive_button">Remove</string>
+    <string name="diary_removal_confirmation_negative_button">Cancel</string>
+    <string name="diary_removal_confirmation_title">Are you sure you want to remove this diary entry? This action cannot be reversed.</string>
 </resources>

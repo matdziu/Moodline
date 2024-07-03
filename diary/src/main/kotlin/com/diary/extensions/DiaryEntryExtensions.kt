@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter
 fun DiaryEntry.toDiaryItem(): DiaryItem {
     val dateTimeFormatter = DateTimeFormatter.ofPattern(COMMON_DATE_AND_TIME_FORMAT)
     return DiaryItem(
+        id = id,
         emotion = emotion,
         entryText = entryText,
         formattedDate = createdAt.format(dateTimeFormatter)

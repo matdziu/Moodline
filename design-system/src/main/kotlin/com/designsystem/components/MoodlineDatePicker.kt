@@ -23,12 +23,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.common.constants.COMMON_DATE_FORMAT
-import com.common.extensions.toMillis
 import com.designsystem.R
 import com.designsystem.theme.MoodlineTheme
 import java.time.Instant
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
@@ -36,20 +34,18 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun MoodlineDatePicker(
     modifier: Modifier = Modifier,
+    selectedDate: LocalDate,
     onDateSelected: (LocalDate) -> Unit,
 ) {
-    val now = LocalDateTime.now()
     val dateTimeFormatter = DateTimeFormatter.ofPattern(COMMON_DATE_FORMAT)
     var showDatePicker by rememberSaveable { mutableStateOf(false) }
-    var formattedDate by rememberSaveable { mutableStateOf(now.format(dateTimeFormatter)) }
-    var selectedDate by rememberSaveable { mutableStateOf(now) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.padding(horizontal = 16.dp),
     ) {
         Text(
-            text = formattedDate,
+            text = selectedDate.format(dateTimeFormatter),
             textAlign = TextAlign.Center,
             modifier = Modifier.weight(0.5f)
         )
@@ -62,7 +58,10 @@ fun MoodlineDatePicker(
 
     if (showDatePicker) {
         val datePickerState = rememberDatePickerState(
-            initialSelectedDateMillis = selectedDate.toMillis(),
+            initialSelectedDateMillis = selectedDate
+                .atStartOfDay(ZoneId.systemDefault())
+                .toInstant()
+                .toEpochMilli()
         )
         DateTimePickerDialog(
             onDismissRequest = { showDatePicker = false },
@@ -73,12 +72,12 @@ fun MoodlineDatePicker(
                         showDatePicker = false
                         val selectedDateMillis = datePickerState.selectedDateMillis
                         if (selectedDateMillis != null) {
-                            selectedDate = Instant
-                                .ofEpochMilli(selectedDateMillis)
-                                .atZone(ZoneId.systemDefault())
-                                .toLocalDateTime()
-                            formattedDate = selectedDate.format(dateTimeFormatter)
-                            onDateSelected(selectedDate.toLocalDate())
+                            onDateSelected(
+                                Instant
+                                    .ofEpochMilli(selectedDateMillis)
+                                    .atZone(ZoneId.systemDefault())
+                                    .toLocalDate()
+                            )
                         }
                     }
                 )
@@ -117,6 +116,7 @@ fun MoodlineDatePicker(
 private fun MoodlineDatePickerPreview() {
     MoodlineTheme {
         MoodlineDatePicker(
+            selectedDate = LocalDate.now(),
             onDateSelected = {},
         )
     }

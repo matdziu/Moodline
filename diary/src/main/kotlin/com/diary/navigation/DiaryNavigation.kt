@@ -7,7 +7,7 @@ import com.diary.DiaryRoute
 const val diaryRoute = "diary"
 
 fun NavGraphBuilder.diaryRoute(
-    navigateToAddEntry: () -> Unit,
+    navigateToAddEntry: (String?) -> Unit,
     onBackButtonPressed: () -> Unit,
 ) {
     composable(route = diaryRoute) {

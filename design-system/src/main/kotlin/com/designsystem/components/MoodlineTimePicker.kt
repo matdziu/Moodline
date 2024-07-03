@@ -29,20 +29,18 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun MoodlineTimePicker(
     modifier: Modifier = Modifier,
+    selectedTime: LocalTime,
     onTimeSelected: (LocalTime) -> Unit
 ) {
-    val now = LocalTime.now()
     val timeFormatter = DateTimeFormatter.ofPattern(COMMON_TIME_FORMAT)
     var showTimePicker by rememberSaveable { mutableStateOf(false) }
-    var formattedTime by rememberSaveable { mutableStateOf(now.format(timeFormatter)) }
-    var selectedTime by rememberSaveable { mutableStateOf(now) }
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier.padding(horizontal = 16.dp),
     ) {
         Text(
-            text = formattedTime,
+            text = selectedTime.format(timeFormatter),
             textAlign = TextAlign.Center,
             modifier = Modifier.weight(0.5f)
         )
@@ -66,9 +64,7 @@ fun MoodlineTimePicker(
                     text = stringResource(id = R.string.time_picker_button_positive),
                     onClick = {
                         showTimePicker = false
-                        selectedTime = LocalTime.of(timePickerState.hour, timePickerState.minute)
-                        formattedTime = selectedTime.format(timeFormatter)
-                        onTimeSelected(selectedTime)
+                        onTimeSelected(LocalTime.of(timePickerState.hour, timePickerState.minute))
                     }
                 )
             },
@@ -90,7 +86,9 @@ fun MoodlineTimePicker(
 @Composable
 private fun MoodlineTimePickerPreview() {
     MoodlineTheme {
-        MoodlineTimePicker {
+        MoodlineTimePicker(
+            selectedTime = LocalTime.now()
+        ) {
 
         }
     }

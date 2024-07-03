@@ -10,6 +10,7 @@ data class DiaryUIState(
 )
 
 data class DiaryItem(
+    val id: String,
     val emotion: Emotion,
     val entryText: String,
     val formattedDate: String,

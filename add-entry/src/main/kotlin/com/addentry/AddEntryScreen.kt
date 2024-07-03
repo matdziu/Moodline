@@ -66,7 +66,7 @@ internal fun AddEntryRoute(
             )
         },
         onAddButtonPressed = {
-            addEntryViewModel.onEvent(AddEntryUIEvent.AddButtonPressed)
+            addEntryViewModel.onEvent(AddEntryUIEvent.SaveButtonPressed)
         },
         onCancelButtonPressed = {
             addEntryViewModel.onEvent(AddEntryUIEvent.CancelButtonPressed)
@@ -105,11 +105,13 @@ internal fun AddEntryScreen(
             )
             Spacer(modifier = Modifier.height(32.dp))
             MoodlineDatePicker(
+                selectedDate = addEntryUIState.selectedDate,
                 onDateSelected = onDateSelected,
             )
             Spacer(modifier = Modifier.height(16.dp))
             MoodlineTimePicker(
                 onTimeSelected = onTimeSelected,
+                selectedTime = addEntryUIState.selectedTime
             )
             Spacer(modifier = Modifier.height(32.dp))
             Text(

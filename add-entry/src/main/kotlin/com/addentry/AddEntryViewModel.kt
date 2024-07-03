@@ -1,7 +1,9 @@
 package com.addentry
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.addentry.navigation.entryIdArgument
 import com.common.constants.MAX_CHAR_LENGTH_OF_DIARY_ENTRY
 import com.domain.entities.DiaryEntry
 import com.domain.entities.Emotion
@@ -18,11 +20,13 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class AddEntryViewModel @Inject constructor(
     private val diaryEntriesRepository: DiaryEntriesRepository,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<AddEntryUIState> = MutableStateFlow(AddEntryUIState())
@@ -33,23 +37,47 @@ class AddEntryViewModel @Inject constructor(
 
     private var entryAddingInProgress = false
 
-    private var selectedLocalDate = LocalDate.now()
-    private var selectedLocalTime = LocalTime.now()
+    private var isInEditMode = false
+    private var editedDiaryEntry: DiaryEntry? = null
+
+    init {
+        onEvent(AddEntryUIEvent.Initialize)
+    }
 
     fun onEvent(event: AddEntryUIEvent) {
         when (event) {
+            AddEntryUIEvent.Initialize -> handleInitializeEvent()
             is AddEntryUIEvent.EmotionSelected -> handleEmotionSelected(event.emotion)
             is AddEntryUIEvent.DiaryEntryTextChanged -> handleDiaryEntryTextChanged(event.newText)
-            AddEntryUIEvent.AddButtonPressed -> {
+            AddEntryUIEvent.SaveButtonPressed -> {
                 if (!entryAddingInProgress) {
                     entryAddingInProgress = true
-                    handleAddButtonPressed()
+                    handleSaveButtonPressed()
                 }
             }
 
             AddEntryUIEvent.CancelButtonPressed -> handleCancelButtonPressed()
             is AddEntryUIEvent.DateSelected -> handleDateSelected(event.localDate)
             is AddEntryUIEvent.TimeSelected -> handleTimeSelected(event.localTime)
+        }
+    }
+
+    private fun handleInitializeEvent() {
+        val entryId: String? = savedStateHandle[entryIdArgument]
+        if (entryId != null) {
+            isInEditMode = true
+            viewModelScope.launch {
+                val currentDiaryEntry = diaryEntriesRepository.getSingle(entryId)
+                editedDiaryEntry = currentDiaryEntry
+                _state.update {
+                    it.copy(
+                        selectedEmotion = currentDiaryEntry.emotion,
+                        diaryEntryText = currentDiaryEntry.entryText,
+                        selectedTime = currentDiaryEntry.createdAt.toLocalTime(),
+                        selectedDate = currentDiaryEntry.createdAt.toLocalDate()
+                    )
+                }
+            }
         }
     }
 
@@ -70,10 +98,12 @@ class AddEntryViewModel @Inject constructor(
         }
     }
 
-    private fun handleAddButtonPressed() = viewModelScope.launch {
+    private fun handleSaveButtonPressed() = viewModelScope.launch {
         val currentState = state.value
         val selectedEmotion = currentState.selectedEmotion
         val diaryEntryText = currentState.diaryEntryText
+        val selectedTime = currentState.selectedTime
+        val selectedDate = currentState.selectedDate
 
         if (selectedEmotion == null) {
             _state.update {
@@ -96,13 +126,26 @@ class AddEntryViewModel @Inject constructor(
             )
         }
 
-        diaryEntriesRepository.add(
-            DiaryEntry(
-                emotion = selectedEmotion,
-                entryText = diaryEntryText,
-                createdAt = LocalDateTime.of(selectedLocalDate, selectedLocalTime),
+        val currentDiaryEntry = editedDiaryEntry
+        if (isInEditMode && currentDiaryEntry != null) {
+            diaryEntriesRepository.updateEntry(
+                DiaryEntry(
+                    id = currentDiaryEntry.id,
+                    emotion = selectedEmotion,
+                    entryText = diaryEntryText,
+                    createdAt = LocalDateTime.of(selectedDate, selectedTime),
+                )
             )
-        )
+        } else {
+            diaryEntriesRepository.add(
+                DiaryEntry(
+                    id = UUID.randomUUID().toString(),
+                    emotion = selectedEmotion,
+                    entryText = diaryEntryText,
+                    createdAt = LocalDateTime.of(selectedDate, selectedTime),
+                )
+            )
+        }
 
         entryAddingInProgress = false
 
@@ -110,11 +153,19 @@ class AddEntryViewModel @Inject constructor(
     }
 
     private fun handleDateSelected(localDate: LocalDate) {
-        selectedLocalDate = localDate
+        _state.update {
+            it.copy(
+                selectedDate = localDate
+            )
+        }
     }
 
     private fun handleTimeSelected(localTime: LocalTime) {
-        selectedLocalTime = localTime
+        _state.update {
+            it.copy(
+                selectedTime = localTime
+            )
+        }
     }
 
     private fun handleCancelButtonPressed() {

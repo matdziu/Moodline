@@ -59,7 +59,7 @@ fun EmotionPicker(
         }
         Spacer(modifier = Modifier.height(8.dp))
         Row(
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            horizontalArrangement = Arrangement.spacedBy(2.dp),
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.wrapContentWidth(),
         ) {
@@ -153,7 +153,7 @@ private fun EmotionWithSelector(
     onEmotionPressed: (EmotionSymbol) -> Unit,
     selected: Boolean,
 ) {
-    val emotionImageSize = 55.dp
+    val emotionImageSize = 50.dp
     val emotionSelectorSize = emotionImageSize + 16.dp
     val emotionColor = when (emotionSymbol) {
         EmotionSymbol.Awful -> customColors.awfulEmotionColor

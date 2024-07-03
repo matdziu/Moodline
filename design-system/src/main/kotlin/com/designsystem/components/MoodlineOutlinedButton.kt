@@ -22,20 +22,21 @@ fun MoodlineOutlinedButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    color: Color = MaterialTheme.colorScheme.inverseSurface
 ) {
     OutlinedButton(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
         colors = ButtonColors(
-            contentColor = MaterialTheme.colorScheme.inverseSurface,
+            contentColor = color,
             containerColor = Color.Transparent,
-            disabledContentColor = MaterialTheme.colorScheme.inverseSurface.copy(alpha = 0.3f),
+            disabledContentColor = color.copy(alpha = 0.3f),
             disabledContainerColor = Color.Transparent,
         ),
         border = BorderStroke(
             width = 1.dp,
-            color = MaterialTheme.colorScheme.inverseSurface,
+            color = color,
         )
     ) {
         Text(

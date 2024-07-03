@@ -6,7 +6,7 @@ import java.util.UUID
 
 internal fun DiaryEntry.toDiaryEntryDb(): DiaryEntryDb {
     return DiaryEntryDb(
-        id = UUID.randomUUID().toString(),
+        id = id,
         emotion = emotion.toEmotionDb(),
         entryText = entryText,
         createdAt = createdAt,
@@ -15,6 +15,7 @@ internal fun DiaryEntry.toDiaryEntryDb(): DiaryEntryDb {
 
 internal fun DiaryEntryDb.toDiaryEntry(): DiaryEntry {
     return DiaryEntry(
+        id = id,
         emotion = emotion.toEmotion(),
         entryText = entryText,
         createdAt = createdAt,

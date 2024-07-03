@@ -30,7 +30,7 @@ import com.designsystem.extensions.toEmotionSymbol
 
 @Composable
 internal fun DiaryRoute(
-    navigateToAddEntry: () -> Unit,
+    navigateToAddEntry: (String?) -> Unit,
     onBackButtonPressed: () -> Unit,
     diaryViewModel: DiaryViewModel = hiltViewModel(),
 ) {
@@ -41,6 +41,8 @@ internal fun DiaryRoute(
             when (it) {
                 DiaryNavigationEvent.Default -> { /* do nothing */
                 }
+
+                is DiaryNavigationEvent.EditEntry -> navigateToAddEntry(it.entryId)
             }
         }
     }
@@ -54,7 +56,9 @@ internal fun DiaryRoute(
     }
     DiaryScreen(
         diaryUIState = state,
-        addEntryButtonPressed = navigateToAddEntry,
+        addEntryButtonPressed = { navigateToAddEntry(null) },
+        onEditEntry = { diaryViewModel.onEvent(DiaryUIEvent.EditEntry(it)) },
+        onRemoveEntry = { diaryViewModel.onEvent(DiaryUIEvent.RemoveEntry(it)) }
     )
 }
 
@@ -62,6 +66,8 @@ internal fun DiaryRoute(
 internal fun DiaryScreen(
     diaryUIState: DiaryUIState = DiaryUIState(),
     addEntryButtonPressed: () -> Unit = {},
+    onEditEntry: (String) -> Unit,
+    onRemoveEntry: (String) -> Unit,
 ) {
     Box(modifier = Modifier.fillMaxSize()) {
         if (diaryUIState.entries.isEmpty() && !diaryUIState.progress) {
@@ -87,7 +93,9 @@ internal fun DiaryScreen(
                     modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
                     entryText = it.entryText,
                     emotionSymbol = it.emotion.toEmotionSymbol(),
-                    formattedDate = it.formattedDate
+                    formattedDate = it.formattedDate,
+                    onEdit = { onEditEntry(it.id) },
+                    onRemove = { onRemoveEntry(it.id) },
                 )
             }
         }

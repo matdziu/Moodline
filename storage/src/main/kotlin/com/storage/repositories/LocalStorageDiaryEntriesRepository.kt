@@ -21,9 +21,15 @@ internal class LocalStorageDiaryEntriesRepository @Inject constructor(
             diaryEntryDao.getAll().map { it.toDiaryEntry() }
         }
 
-    override suspend fun add(entry: DiaryEntry) = withContext(coroutineDispatchersProvider.io()) {
-        diaryEntryDao.insert(entry.toDiaryEntryDb())
-    }
+    override suspend fun getSingle(entryId: String): DiaryEntry =
+        withContext(coroutineDispatchersProvider.io()) {
+            diaryEntryDao.getSingle(entryId).toDiaryEntry()
+        }
+
+    override suspend fun add(entry: DiaryEntry) =
+        withContext(coroutineDispatchersProvider.io()) {
+            diaryEntryDao.insert(entry.toDiaryEntryDb())
+        }
 
     override fun getAllFlow(): Flow<List<DiaryEntry>> {
         return diaryEntryDao.getAllFlow()
@@ -31,4 +37,14 @@ internal class LocalStorageDiaryEntriesRepository @Inject constructor(
                 entries.map { it.toDiaryEntry() }
             }
     }
+
+    override suspend fun deleteEntry(entryId: String) =
+        withContext(coroutineDispatchersProvider.io()) {
+            diaryEntryDao.deleteEntry(entryId)
+        }
+
+    override suspend fun updateEntry(diaryEntry: DiaryEntry) =
+        withContext(coroutineDispatchersProvider.io()) {
+            diaryEntryDao.updateEntries(diaryEntry.toDiaryEntryDb())
+        }
 }

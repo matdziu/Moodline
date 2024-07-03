@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.time.LocalDateTime
 
-@Entity(tableName = "diaryEntries")
+@Entity(tableName = "diaryEntry")
 internal data class DiaryEntryDb(
     @PrimaryKey val id: String,
 

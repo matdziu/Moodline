@@ -33,6 +33,8 @@ internal class DiaryViewModel @Inject constructor(
         when (event) {
             DiaryUIEvent.Initialize -> handleInitializeEvent()
             DiaryUIEvent.Refresh -> handleRefreshEvent()
+            is DiaryUIEvent.EditEntry -> handleEditEntryEvent(event.diaryEntryId)
+            is DiaryUIEvent.RemoveEntry -> handleRemoveEntryEvent(event.diaryEntryId)
         }
     }
 
@@ -57,22 +59,45 @@ internal class DiaryViewModel @Inject constructor(
         fetchDiaryEntries()
     }
 
+    private fun handleEditEntryEvent(diaryEntryId: String) {
+        viewModelScope.launch {
+            _navigationEvents.emit(DiaryNavigationEvent.EditEntry(diaryEntryId))
+        }
+    }
+
+    private fun handleRemoveEntryEvent(diaryEntryId: String) {
+        _state.update {
+            it.copy(
+                progress = true
+            )
+        }
+
+        viewModelScope.launch {
+
+            diaryEntriesRepository.deleteEntry(diaryEntryId)
+
+            _state.update {
+                it.copy(
+                    progress = false
+                )
+            }
+
+        }
+    }
+
     private fun fetchDiaryEntries() {
         viewModelScope.launch {
             _state.update {
                 it.copy(
                     progress = false,
-                    entries = diaryEntriesRepository
-                        .getAll()
-                        .diaryEntriesToListItems()
+                    entries = diaryEntriesRepository.getAll().diaryEntriesToListItems()
                 )
             }
         }
     }
 
     private fun List<DiaryEntry>.diaryEntriesToListItems(): ImmutableList<DiaryItem> {
-        return sortedByDescending { entry -> entry.createdAt }
-            .map { entry -> entry.toDiaryItem() }
+        return sortedByDescending { entry -> entry.createdAt }.map { entry -> entry.toDiaryItem() }
             .toPersistentList()
     }
 }

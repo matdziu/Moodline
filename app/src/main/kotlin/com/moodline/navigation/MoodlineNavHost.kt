@@ -28,7 +28,7 @@ fun MoodlineNavHost(
         exitTransition = { fadeOut(animationSpec = tween(400)) },
     ) {
         diaryRoute(
-            navigateToAddEntry = { navController.navigateToAddEntry() },
+            navigateToAddEntry = { navController.navigateToAddEntry(it) },
             onBackButtonPressed = { closeApp() }
         )
         statsRoute(
