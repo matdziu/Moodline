@@ -27,6 +27,8 @@ import com.designsystem.R
 import com.designsystem.theme.MoodlineTheme
 import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
@@ -58,8 +60,8 @@ fun MoodlineDatePicker(
 
     if (showDatePicker) {
         val datePickerState = rememberDatePickerState(
-            initialSelectedDateMillis = selectedDate
-                .atStartOfDay(ZoneId.systemDefault())
+            initialSelectedDateMillis = LocalDateTime.of(selectedDate, LocalTime.NOON)
+                .atZone(ZoneId.systemDefault())
                 .toInstant()
                 .toEpochMilli()
         )
