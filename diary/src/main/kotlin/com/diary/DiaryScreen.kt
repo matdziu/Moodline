@@ -83,7 +83,8 @@ internal fun DiaryScreen(
         }
 
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize(),
         ) {
             DiaryReminderPickerButton(
                 modifier = Modifier.padding(
