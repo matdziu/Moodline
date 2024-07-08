@@ -2,6 +2,7 @@ package com.diary
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,6 +28,7 @@ import com.designsystem.components.DiaryListItem
 import com.designsystem.components.FullScreenProgressIndicator
 import com.designsystem.components.OneTimeLaunchedEffect
 import com.designsystem.extensions.toEmotionSymbol
+import com.reminder.button.DiaryReminderPickerButton
 
 @Composable
 internal fun DiaryRoute(
@@ -80,23 +82,35 @@ internal fun DiaryScreen(
             )
         }
 
-        LazyColumn(
-            contentPadding = PaddingValues(
-                start = 16.dp,
-                end = 16.dp,
-                top = 16.dp,
-                bottom = 88.dp,
-            )
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(diaryUIState.entries) {
-                DiaryListItem(
-                    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
-                    entryText = it.entryText,
-                    emotionSymbol = it.emotion.toEmotionSymbol(),
-                    formattedDate = it.formattedDate,
-                    onEdit = { onEditEntry(it.id) },
-                    onRemove = { onRemoveEntry(it.id) },
+            DiaryReminderPickerButton(
+                modifier = Modifier.padding(
+                    top = 16.dp,
+                    bottom = 16.dp,
+                    start = 16.dp,
+                    end = 16.dp
+                ),
+            )
+            LazyColumn(
+                contentPadding = PaddingValues(
+                    start = 16.dp,
+                    end = 16.dp,
+                    top = 0.dp,
+                    bottom = 88.dp,
                 )
+            ) {
+                items(diaryUIState.entries) {
+                    DiaryListItem(
+                        modifier = Modifier.padding(vertical = 8.dp),
+                        entryText = it.entryText,
+                        emotionSymbol = it.emotion.toEmotionSymbol(),
+                        formattedDate = it.formattedDate,
+                        onEdit = { onEditEntry(it.id) },
+                        onRemove = { onRemoveEntry(it.id) },
+                    )
+                }
             }
         }
 

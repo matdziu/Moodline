@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="reminder_option_every_day">every day</string>
+    <string name="reminder_option_every_other_day">every other day</string>
+    <string name="reminder_option_every_week">every week</string>
+    <string name="reminder_title">Set a reminder for your diary entries:</string>
+    <string name="reminder_positive_button">Save</string>
+    <string name="reminder_negative_button">Cancel</string>
+    <string name="diary_reminder_picker_button_not_set">Click to SET a reminder for diary entries</string>
+    <string name="diary_reminder_picker_cancelled_toast_info">Reminder cancelled</string>
+    <string name="diary_reminder_picker_set_toast_info">Reminder set</string>
+    <string name="diary_reminder_picker_button_already_set">Diary entry reminder is set! Click to CANCEL</string>
+</resources>

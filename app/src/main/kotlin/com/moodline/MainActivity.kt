@@ -20,8 +20,6 @@ import com.improve.navigation.improveRoute
 import com.moodline.navigation.MoodlineNavHost
 import com.stats.navigation.statsRoute
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.count
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

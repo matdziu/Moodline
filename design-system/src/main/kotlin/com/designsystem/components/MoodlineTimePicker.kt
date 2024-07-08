@@ -30,7 +30,7 @@ import java.time.format.DateTimeFormatter
 fun MoodlineTimePicker(
     modifier: Modifier = Modifier,
     selectedTime: LocalTime,
-    onTimeSelected: (LocalTime) -> Unit
+    onTimeSelected: (LocalTime) -> Unit,
 ) {
     val timeFormatter = DateTimeFormatter.ofPattern(COMMON_TIME_FORMAT)
     var showTimePicker by rememberSaveable { mutableStateOf(false) }
@@ -87,9 +87,8 @@ fun MoodlineTimePicker(
 private fun MoodlineTimePickerPreview() {
     MoodlineTheme {
         MoodlineTimePicker(
-            selectedTime = LocalTime.now()
-        ) {
-
-        }
+            selectedTime = LocalTime.now(),
+            onTimeSelected = {},
+        )
     }
 }
