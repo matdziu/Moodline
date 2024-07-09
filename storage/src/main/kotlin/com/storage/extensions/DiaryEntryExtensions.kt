@@ -2,7 +2,6 @@ package com.storage.extensions
 
 import com.domain.entities.DiaryEntry
 import com.storage.models.DiaryEntryDb
-import java.util.UUID
 
 internal fun DiaryEntry.toDiaryEntryDb(): DiaryEntryDb {
     return DiaryEntryDb(
@@ -10,6 +9,8 @@ internal fun DiaryEntry.toDiaryEntryDb(): DiaryEntryDb {
         emotion = emotion.toEmotionDb(),
         entryText = entryText,
         createdAt = createdAt,
+        month = createdAt.monthValue,
+        year = createdAt.year
     )
 }
 

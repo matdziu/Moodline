@@ -18,7 +18,9 @@ internal class LocalStorageDiaryEntriesRepository @Inject constructor(
 
     override suspend fun getAll(): List<DiaryEntry> =
         withContext(coroutineDispatchersProvider.io()) {
-            diaryEntryDao.getAll().map { it.toDiaryEntry() }
+            diaryEntryDao.getAll()
+                .sortedByDescending { entry -> entry.createdAt }
+                .map { it.toDiaryEntry() }
         }
 
     override suspend fun getSingle(entryId: String): DiaryEntry =
@@ -26,16 +28,16 @@ internal class LocalStorageDiaryEntriesRepository @Inject constructor(
             diaryEntryDao.getSingle(entryId).toDiaryEntry()
         }
 
-    override suspend fun add(entry: DiaryEntry) =
-        withContext(coroutineDispatchersProvider.io()) {
-            diaryEntryDao.insert(entry.toDiaryEntryDb())
-        }
+    override suspend fun add(entry: DiaryEntry) = withContext(coroutineDispatchersProvider.io()) {
+        diaryEntryDao.insert(entry.toDiaryEntryDb())
+    }
 
     override fun getAllFlow(): Flow<List<DiaryEntry>> {
-        return diaryEntryDao.getAllFlow()
-            .map { entries ->
-                entries.map { it.toDiaryEntry() }
-            }
+        return diaryEntryDao.getAllFlow().map { entries ->
+            entries
+                .sortedByDescending { entry -> entry.createdAt }
+                .map { it.toDiaryEntry() }
+        }
     }
 
     override suspend fun deleteEntry(entryId: String) =
@@ -47,4 +49,12 @@ internal class LocalStorageDiaryEntriesRepository @Inject constructor(
         withContext(coroutineDispatchersProvider.io()) {
             diaryEntryDao.updateEntries(diaryEntry.toDiaryEntryDb())
         }
+
+    override suspend fun getByMonthAndYearFlow(month: Int, year: Int): List<DiaryEntry> {
+        return withContext(coroutineDispatchersProvider.io()) {
+            diaryEntryDao.getByMonthAndYear(month = month, year = year).map {
+                it.toDiaryEntry()
+            }
+        }
+    }
 }

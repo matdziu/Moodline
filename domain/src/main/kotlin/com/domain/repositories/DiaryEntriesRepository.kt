@@ -16,4 +16,6 @@ interface DiaryEntriesRepository {
     suspend fun deleteEntry(entryId: String)
 
     suspend fun updateEntry(diaryEntry: DiaryEntry)
+
+    suspend fun getByMonthAndYearFlow(month: Int, year: Int): List<DiaryEntry>
 }

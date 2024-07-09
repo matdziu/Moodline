@@ -1,7 +1,6 @@
 package com.storage.daos
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -29,4 +28,7 @@ internal interface DiaryEntryDao {
 
     @Query("DELETE FROM diaryEntry WHERE diaryEntry.id = :entryId")
     fun deleteEntry(entryId: String)
+
+    @Query("SELECT * FROM diaryEntry WHERE diaryEntry.month = :month AND diaryEntry.year = :year")
+    fun getByMonthAndYear(month: Int, year: Int): List<DiaryEntryDb>
 }

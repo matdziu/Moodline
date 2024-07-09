@@ -11,4 +11,6 @@ internal data class DiaryEntryDb(
     val emotion: EmotionDb,
     val entryText: String,
     val createdAt: LocalDateTime,
+    val month: Int,
+    val year: Int,
 )

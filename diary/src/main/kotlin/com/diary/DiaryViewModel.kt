@@ -42,13 +42,13 @@ internal class DiaryViewModel @Inject constructor(
         _state.update {
             it.copy(progress = true)
         }
-        fetchDiaryEntries()
 
         viewModelScope.launch {
             diaryEntriesRepository.getAllFlow().collect { newDiaryEntries ->
                 _state.update {
                     it.copy(
-                        entries = newDiaryEntries.diaryEntriesToListItems()
+                        entries = newDiaryEntries.diaryEntriesToListItems(),
+                        progress = false,
                     )
                 }
             }
