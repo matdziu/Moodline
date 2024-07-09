@@ -4,7 +4,7 @@ sealed interface DiaryUIEvent {
 
     data object Initialize : DiaryUIEvent
 
-    data object Refresh : DiaryUIEvent
+    data object OnDispose: DiaryUIEvent
 
     data class RemoveEntry(val diaryEntryId: String): DiaryUIEvent
 

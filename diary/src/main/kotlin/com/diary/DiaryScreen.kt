@@ -14,6 +14,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +27,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.common.extensions.launchAndRepeatOnLifecycle
 import com.designsystem.components.DiaryListItem
 import com.designsystem.components.FullScreenProgressIndicator
-import com.designsystem.components.OneTimeLaunchedEffect
 import com.designsystem.extensions.toEmotionSymbol
 import com.reminder.button.DiaryReminderPickerButton
 
@@ -49,8 +49,10 @@ internal fun DiaryRoute(
         }
     }
 
-    OneTimeLaunchedEffect {
+    DisposableEffect(Unit) {
         diaryViewModel.onEvent(DiaryUIEvent.Initialize)
+
+        onDispose { diaryViewModel.onEvent(DiaryUIEvent.OnDispose) }
     }
 
     BackHandler {

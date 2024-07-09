@@ -6,6 +6,7 @@ import com.domain.entities.DiaryEntry
 import com.domain.entities.Emotion
 import com.domain.repositories.DiaryEntriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,14 +22,17 @@ internal class StatsViewModel @Inject constructor(
     private val _state: MutableStateFlow<StatsUIState> = MutableStateFlow(StatsUIState())
     val state: StateFlow<StatsUIState> = _state.asStateFlow()
 
+    private var listenToAllEntriesJob: Job? = null
+
     fun onEvent(event: StatsUIEvent) {
         when (event) {
             StatsUIEvent.Initialize -> handleInitializeEvent()
+            StatsUIEvent.OnDispose -> handleOnDisposeEvent()
         }
     }
 
     private fun handleInitializeEvent() {
-        viewModelScope.launch {
+        listenToAllEntriesJob = viewModelScope.launch {
 
             diaryEntriesRepository.getAllFlow().collect { allEntries ->
                 createAllStatsItems(
@@ -37,6 +41,10 @@ internal class StatsViewModel @Inject constructor(
             }
 
         }
+    }
+
+    private fun handleOnDisposeEvent() {
+        listenToAllEntriesJob?.cancel()
     }
 
     private suspend fun createAllStatsItems(
@@ -55,8 +63,7 @@ internal class StatsViewModel @Inject constructor(
                 val currentCreatedAtYear = currentCreatedAt.year
 
                 val entriesByMonthAndYear = diaryEntriesRepository.getByMonthAndYearFlow(
-                    month = currentCreatedAtMonth,
-                    year = currentCreatedAtYear
+                    month = currentCreatedAtMonth, year = currentCreatedAtYear
                 )
 
                 if (entriesByMonthAndYear.isEmpty()) continue
@@ -101,9 +108,7 @@ internal class StatsViewModel @Inject constructor(
     }
 
     private fun createSingleStatsItem(
-        month: Int,
-        year: Int,
-        filteredEntries: List<DiaryEntry>
+        month: Int, year: Int, filteredEntries: List<DiaryEntry>
     ): StatsItem {
         var numberOfRad = 0
         var numberOfGood = 0

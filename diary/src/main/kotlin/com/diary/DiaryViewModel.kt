@@ -8,6 +8,7 @@ import com.domain.repositories.DiaryEntriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
@@ -29,12 +30,14 @@ internal class DiaryViewModel @Inject constructor(
     private val _navigationEvents: MutableSharedFlow<DiaryNavigationEvent> = MutableSharedFlow()
     val navigationEvents: SharedFlow<DiaryNavigationEvent> = _navigationEvents.asSharedFlow()
 
+    private var listenToAllEntriesJob: Job? = null
+
     fun onEvent(event: DiaryUIEvent) {
         when (event) {
             DiaryUIEvent.Initialize -> handleInitializeEvent()
-            DiaryUIEvent.Refresh -> handleRefreshEvent()
             is DiaryUIEvent.EditEntry -> handleEditEntryEvent(event.diaryEntryId)
             is DiaryUIEvent.RemoveEntry -> handleRemoveEntryEvent(event.diaryEntryId)
+            DiaryUIEvent.OnDispose -> handleOnDisposeEvent()
         }
     }
 
@@ -43,7 +46,7 @@ internal class DiaryViewModel @Inject constructor(
             it.copy(progress = true)
         }
 
-        viewModelScope.launch {
+        listenToAllEntriesJob = viewModelScope.launch {
             diaryEntriesRepository.getAllFlow().collect { newDiaryEntries ->
                 _state.update {
                     it.copy(
@@ -53,10 +56,6 @@ internal class DiaryViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    private fun handleRefreshEvent() {
-        fetchDiaryEntries()
     }
 
     private fun handleEditEntryEvent(diaryEntryId: String) {
@@ -83,6 +82,10 @@ internal class DiaryViewModel @Inject constructor(
             }
 
         }
+    }
+
+    private fun handleOnDisposeEvent() {
+        listenToAllEntriesJob?.cancel()
     }
 
     private fun fetchDiaryEntries() {
