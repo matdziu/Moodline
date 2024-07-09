@@ -66,8 +66,6 @@ internal class StatsViewModel @Inject constructor(
                     month = currentCreatedAtMonth, year = currentCreatedAtYear
                 )
 
-                if (entriesByMonthAndYear.isEmpty()) continue
-
                 val statsItem = createSingleStatsItem(
                     month = currentCreatedAtMonth,
                     year = currentCreatedAtYear,
