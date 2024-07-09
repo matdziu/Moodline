@@ -2,6 +2,10 @@ package com.reminder.button
 
 import androidx.lifecycle.ViewModel
 import com.reminder.R
+import com.reminder.button.DiaryReminderPickerButtonUIEvent.ButtonPressed
+import com.reminder.button.DiaryReminderPickerButtonUIEvent.DialogDismissed
+import com.reminder.button.DiaryReminderPickerButtonUIEvent.ReminderSet
+import com.reminder.button.DiaryReminderPickerButtonUIEvent.ToastDisplayed
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,20 +24,40 @@ internal class DiaryReminderPickerButtonViewModel @Inject constructor() : ViewMo
 
     fun onEvent(event: DiaryReminderPickerButtonUIEvent) {
         when (event) {
-            DiaryReminderPickerButtonUIEvent.ButtonPressed -> handleButtonPressed()
-            DiaryReminderPickerButtonUIEvent.ToastDisplayed -> handleToastDisplayedEvent()
+            ButtonPressed -> handleButtonPressed()
+            ToastDisplayed -> handleToastDisplayedEvent()
+            DialogDismissed -> handleDialogDismissedEvent()
+            ReminderSet -> handleReminderSetEvent()
         }
     }
 
     private fun handleButtonPressed() {
-        val toggledIsReminderSet = !state.value.isReminderSet
+        if (state.value.isReminderSet) {
+            _state.update {
+                it.copy(
+                    isReminderSet = false,
+                    buttonTitleRes = getButtonTitleRes(isReminderSet = false),
+                    showToast = true,
+                    toastInfoRes = getToastInfoRes(isReminderSet = false)
+                )
+            }
+        } else {
+            _state.update {
+                it.copy(
+                    showDialog = true
+                )
+            }
+        }
+    }
 
+    private fun handleReminderSetEvent() {
         _state.update {
             it.copy(
-                isReminderSet = toggledIsReminderSet,
-                buttonTitleRes = getButtonTitleRes(toggledIsReminderSet),
+                isReminderSet = true,
+                buttonTitleRes = getButtonTitleRes(isReminderSet = true),
                 showToast = true,
-                toastInfoRes = getToastInfoRes(toggledIsReminderSet)
+                toastInfoRes = getToastInfoRes(isReminderSet = true),
+                showDialog = false
             )
         }
     }
@@ -43,6 +67,14 @@ internal class DiaryReminderPickerButtonViewModel @Inject constructor() : ViewMo
             it.copy(
                 showToast = false,
                 toastInfoRes = null
+            )
+        }
+    }
+
+    private fun handleDialogDismissedEvent() {
+        _state.update {
+            it.copy(
+                showDialog = false
             )
         }
     }

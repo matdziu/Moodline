@@ -5,4 +5,8 @@ internal sealed interface DiaryReminderPickerButtonUIEvent {
     data object ButtonPressed : DiaryReminderPickerButtonUIEvent
 
     data object ToastDisplayed : DiaryReminderPickerButtonUIEvent
+
+    data object DialogDismissed: DiaryReminderPickerButtonUIEvent
+
+    data object ReminderSet: DiaryReminderPickerButtonUIEvent
 }

@@ -14,6 +14,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.designsystem.components.MoodlineOutlinedButton
 import com.designsystem.theme.MoodlineTheme
 import com.reminder.R
+import com.reminder.button.DiaryReminderPickerButtonUIEvent.ButtonPressed
+import com.reminder.button.DiaryReminderPickerButtonUIEvent.DialogDismissed
+import com.reminder.button.DiaryReminderPickerButtonUIEvent.ReminderSet
+import com.reminder.button.DiaryReminderPickerButtonUIEvent.ToastDisplayed
+import com.reminder.dialog.ReminderPickerDialog
 
 @Composable
 fun DiaryReminderPickerButton(
@@ -23,7 +28,7 @@ fun DiaryReminderPickerButton(
     val state by buttonViewModel.state.collectAsStateWithLifecycle()
 
     if (state.showToast) {
-        buttonViewModel.onEvent(DiaryReminderPickerButtonUIEvent.ToastDisplayed)
+        buttonViewModel.onEvent(ToastDisplayed)
         val context = LocalContext.current
         Toast.makeText(
             context,
@@ -36,10 +41,18 @@ fun DiaryReminderPickerButton(
         modifier = modifier,
         text = stringResource(id = state.buttonTitleRes),
         onClick = {
-            buttonViewModel.onEvent(DiaryReminderPickerButtonUIEvent.ButtonPressed)
+            buttonViewModel.onEvent(ButtonPressed)
         },
         color = if (state.isReminderSet) MaterialTheme.colorScheme.inverseSurface else MaterialTheme.colorScheme.error
     )
+
+    if (state.showDialog) {
+        ReminderPickerDialog(
+            onDismissRequest = { buttonViewModel.onEvent(DialogDismissed) },
+            onConfirmButtonClicked = { buttonViewModel.onEvent(ReminderSet) },
+            onDismissButtonClicked = { buttonViewModel.onEvent(DialogDismissed) }
+        )
+    }
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
