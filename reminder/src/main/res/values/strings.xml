@@ -8,6 +8,9 @@
     <string name="reminder_negative_button">Cancel</string>
     <string name="diary_reminder_picker_button_not_set">Click to SET a reminder for diary entries</string>
     <string name="diary_reminder_picker_cancelled_toast_info">Reminder cancelled</string>
+    <string name="diary_reminder_permission_denied_rationale">Please enable notifications to use diary reminder</string>
     <string name="diary_reminder_picker_set_toast_info">Reminder set</string>
     <string name="diary_reminder_picker_button_already_set">Diary entry reminder is set! Click to CANCEL</string>
+    <string name="diary_reminder_notification_title">Time for you diary entry!</string>
+    <string name="diary_reminder_notification_text">Click to add a new entry in your Moodline diary</string>
 </resources>

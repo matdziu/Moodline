@@ -5,7 +5,9 @@ import com.reminder.R
 import com.reminder.dialog.ReminderUIEvent.ReminderDropdownClicked
 import com.reminder.dialog.ReminderUIEvent.ReminderDropdownOnDismiss
 import com.reminder.dialog.ReminderUIEvent.ReminderDropdownOptionSelected
+import com.reminder.dialog.ReminderUIEvent.SaveButtonPressed
 import com.reminder.dialog.ReminderUIEvent.TimeSelected
+import com.reminder.work.ReminderNotificationWorkScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,18 +18,20 @@ import java.time.LocalTime
 import javax.inject.Inject
 
 @HiltViewModel
-internal class ReminderViewModel @Inject constructor() : ViewModel() {
+internal class ReminderViewModel @Inject constructor(
+    private val reminderNotificationWorkScheduler: ReminderNotificationWorkScheduler,
+) : ViewModel() {
 
     private val initialDropdownOption = ReminderDropdownOption(
-        id = ReminderDropdownId.EVERY_DAY,
+        id = ReminderPeriodId.EVERY_DAY,
         title = R.string.reminder_option_every_day,
     )
     private val dropdownOptions = persistentListOf(
         initialDropdownOption, ReminderDropdownOption(
-            id = ReminderDropdownId.EVERY_OTHER_DAY,
+            id = ReminderPeriodId.EVERY_OTHER_DAY,
             title = R.string.reminder_option_every_other_day,
         ), ReminderDropdownOption(
-            id = ReminderDropdownId.EVERY_WEEK,
+            id = ReminderPeriodId.EVERY_WEEK,
             title = R.string.reminder_option_every_week,
         )
     )
@@ -49,6 +53,7 @@ internal class ReminderViewModel @Inject constructor() : ViewModel() {
             )
 
             is TimeSelected -> handleTimeSelectedEvent(event.localTime)
+            SaveButtonPressed -> handleSaveButtonPressed()
         }
     }
 
@@ -82,5 +87,12 @@ internal class ReminderViewModel @Inject constructor() : ViewModel() {
                 selectedTime = selectedTime,
             )
         }
+    }
+
+    private fun handleSaveButtonPressed() {
+        reminderNotificationWorkScheduler.schedule(
+            reminderPeriodId = state.value.selectedDropdownOption.id,
+            time = state.value.selectedTime
+        )
     }
 }

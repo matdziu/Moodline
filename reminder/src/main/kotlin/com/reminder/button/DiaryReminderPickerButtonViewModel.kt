@@ -1,26 +1,43 @@
 package com.reminder.button
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.reminder.R
 import com.reminder.button.DiaryReminderPickerButtonUIEvent.ButtonPressed
 import com.reminder.button.DiaryReminderPickerButtonUIEvent.DialogDismissed
 import com.reminder.button.DiaryReminderPickerButtonUIEvent.ReminderSet
 import com.reminder.button.DiaryReminderPickerButtonUIEvent.ToastDisplayed
+import com.reminder.work.ReminderNotificationWorkScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class DiaryReminderPickerButtonViewModel @Inject constructor() : ViewModel() {
+internal class DiaryReminderPickerButtonViewModel @Inject constructor(
+    private val reminderNotificationWorkScheduler: ReminderNotificationWorkScheduler,
+) : ViewModel() {
 
     private val _state: MutableStateFlow<DiaryReminderPickerButtonState> = MutableStateFlow(
         DiaryReminderPickerButtonState()
     )
     val state: StateFlow<DiaryReminderPickerButtonState> = _state.asStateFlow()
 
+    init {
+        viewModelScope.launch {
+            val isReminderSet = reminderNotificationWorkScheduler.isScheduled()
+            _state.update {
+                it.copy(
+                    isReminderSet = isReminderSet,
+                    buttonTitleRes = getButtonTitleRes(isReminderSet),
+                    toastInfoRes = getToastInfoRes(isReminderSet),
+                )
+            }
+        }
+    }
 
     fun onEvent(event: DiaryReminderPickerButtonUIEvent) {
         when (event) {
@@ -33,6 +50,7 @@ internal class DiaryReminderPickerButtonViewModel @Inject constructor() : ViewMo
 
     private fun handleButtonPressed() {
         if (state.value.isReminderSet) {
+            cancelReminder()
             _state.update {
                 it.copy(
                     isReminderSet = false,
@@ -48,6 +66,10 @@ internal class DiaryReminderPickerButtonViewModel @Inject constructor() : ViewMo
                 )
             }
         }
+    }
+
+    private fun cancelReminder() {
+        reminderNotificationWorkScheduler.cancel()
     }
 
     private fun handleReminderSetEvent() {

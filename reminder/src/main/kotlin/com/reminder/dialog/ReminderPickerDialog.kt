@@ -80,7 +80,10 @@ fun ReminderPickerDialog(
                 },
                 onDropdownDismiss = { reminderViewModel.onEvent(ReminderDropdownOnDismiss) },
                 onTimeSelected = { reminderViewModel.onEvent(ReminderUIEvent.TimeSelected(it)) },
-                onConfirmButtonClicked = onConfirmButtonClicked,
+                onConfirmButtonClicked = {
+                    reminderViewModel.onEvent(ReminderUIEvent.SaveButtonPressed)
+                    onConfirmButtonClicked()
+                },
                 onDismissButtonClicked = onDismissButtonClicked,
             )
 

@@ -13,4 +13,6 @@ internal sealed interface ReminderUIEvent {
     ) : ReminderUIEvent
 
     data class TimeSelected(val localTime: LocalTime) : ReminderUIEvent
+
+    data object SaveButtonPressed: ReminderUIEvent
 }

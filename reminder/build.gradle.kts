@@ -18,6 +18,7 @@ dependencies {
     implementation(libs.androidx.compose.lifecycle)
     implementation(libs.work.manager)
     implementation(libs.work.manager.ktx)
+    implementation(libs.accompanist.permissions)
 
     testImplementation(libs.junit)
 }
