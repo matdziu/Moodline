@@ -53,9 +53,9 @@ internal class StatsViewModel @Inject constructor(
         val allEntriesSize = allEntries.size
         var currentlyFilteredEntriesNumber = 0
         val allStats: MutableList<StatsItem> = mutableListOf()
-        var currentCreatedAt = allEntries.first().createdAt
 
         if (allEntries.isNotEmpty()) {
+            var currentCreatedAt = allEntries.first().createdAt
 
             while (currentlyFilteredEntriesNumber < allEntriesSize) {
 
