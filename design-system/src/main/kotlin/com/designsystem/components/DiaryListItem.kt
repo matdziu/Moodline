@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import com.common.constants.MAX_CHAR_LENGTH_OF_DIARY_ENTRY
 import com.designsystem.R
 import com.designsystem.theme.MoodlineTheme
-import com.designsystem.theme.customColors
 
 @Composable
 fun DiaryListItem(
@@ -95,13 +94,7 @@ fun DiaryListItem(
                             EmotionSymbol.Rad -> R.string.emotion_symbol_rad_text
                         }
                     )
-                    val emotionColor = when (emotionSymbol) {
-                        EmotionSymbol.Awful -> customColors.awfulEmotionColor
-                        EmotionSymbol.Bad -> customColors.badEmotionColor
-                        EmotionSymbol.Good -> customColors.goodEmotionColor
-                        EmotionSymbol.Meh -> customColors.mehEmotionColor
-                        EmotionSymbol.Rad -> customColors.radEmotionColor
-                    }
+                    val emotionColor = emotionSymbol.toColor()
                     Column {
                         Text(
                             text = formattedDate,

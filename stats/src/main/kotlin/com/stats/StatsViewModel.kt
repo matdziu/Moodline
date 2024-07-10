@@ -2,16 +2,20 @@ package com.stats
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.common.constants.STATS_ITEM_DATE_FORMAT
 import com.domain.entities.DiaryEntry
 import com.domain.entities.Emotion
 import com.domain.repositories.DiaryEntriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,6 +28,8 @@ internal class StatsViewModel @Inject constructor(
 
     private var listenToAllEntriesJob: Job? = null
 
+    private val dateTimeFormatter = DateTimeFormatter.ofPattern(STATS_ITEM_DATE_FORMAT)
+
     fun onEvent(event: StatsUIEvent) {
         when (event) {
             StatsUIEvent.Initialize -> handleInitializeEvent()
@@ -33,6 +39,12 @@ internal class StatsViewModel @Inject constructor(
 
     private fun handleInitializeEvent() {
         listenToAllEntriesJob = viewModelScope.launch {
+
+            _state.update {
+                it.copy(
+                    progress = true,
+                )
+            }
 
             diaryEntriesRepository.getAllFlow().collect { allEntries ->
                 createAllStatsItems(
@@ -67,8 +79,7 @@ internal class StatsViewModel @Inject constructor(
                 )
 
                 val statsItem = createSingleStatsItem(
-                    month = currentCreatedAtMonth,
-                    year = currentCreatedAtYear,
+                    label = currentCreatedAt.format(dateTimeFormatter),
                     filteredEntries = entriesByMonthAndYear
                 )
 
@@ -81,15 +92,10 @@ internal class StatsViewModel @Inject constructor(
 
             }
 
-            var debugText = ""
-
-            allStats.forEach {
-                debugText += "\n\n$it"
-            }
-
             _state.update {
                 it.copy(
-                    debugText = debugText
+                    progress = false,
+                    statsItems = allStats.toImmutableList(),
                 )
             }
 
@@ -98,7 +104,8 @@ internal class StatsViewModel @Inject constructor(
 
             _state.update {
                 it.copy(
-                    debugText = "EMPTY"
+                    progress = false,
+                    statsItems = persistentListOf()
                 )
             }
 
@@ -106,7 +113,8 @@ internal class StatsViewModel @Inject constructor(
     }
 
     private fun createSingleStatsItem(
-        month: Int, year: Int, filteredEntries: List<DiaryEntry>
+        label: String,
+        filteredEntries: List<DiaryEntry>,
     ): StatsItem {
         var numberOfRad = 0
         var numberOfGood = 0
@@ -127,13 +135,12 @@ internal class StatsViewModel @Inject constructor(
         }
 
         return StatsItem(
-            month = month,
-            year = year,
-            numberOfRad = numberOfRad,
-            numberOfGood = numberOfGood,
-            numberOfMeh = numberOfMeh,
-            numberOfBad = numberOfBad,
-            numberOfAwful = numberOfAwful,
+            label = label,
+            radCount = numberOfRad,
+            goodCount = numberOfGood,
+            mehCount = numberOfMeh,
+            badCount = numberOfBad,
+            awfulCount = numberOfAwful,
         )
     }
 }

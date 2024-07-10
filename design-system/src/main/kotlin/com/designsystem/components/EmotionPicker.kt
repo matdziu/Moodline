@@ -30,7 +30,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.designsystem.R
 import com.designsystem.theme.MoodlineTheme
-import com.designsystem.theme.customColors
 
 @Composable
 fun EmotionPicker(
@@ -155,20 +154,16 @@ private fun EmotionWithSelector(
 ) {
     val emotionImageSize = 50.dp
     val emotionSelectorSize = emotionImageSize + 16.dp
-    val emotionColor = when (emotionSymbol) {
-        EmotionSymbol.Awful -> customColors.awfulEmotionColor
-        EmotionSymbol.Bad -> customColors.badEmotionColor
-        EmotionSymbol.Good -> customColors.goodEmotionColor
-        EmotionSymbol.Meh -> customColors.mehEmotionColor
-        EmotionSymbol.Rad -> customColors.radEmotionColor
-    }
-    val emotionText = stringResource(id =when (emotionSymbol) {
-        EmotionSymbol.Awful -> R.string.emotion_symbol_awful_text
-        EmotionSymbol.Bad -> R.string.emotion_symbol_bad_text
-        EmotionSymbol.Good -> R.string.emotion_symbol_good_text
-        EmotionSymbol.Meh -> R.string.emotion_symbol_meh_text
-        EmotionSymbol.Rad -> R.string.emotion_symbol_rad_text
-    })
+    val emotionColor = emotionSymbol.toColor()
+    val emotionText = stringResource(
+        id = when (emotionSymbol) {
+            EmotionSymbol.Awful -> R.string.emotion_symbol_awful_text
+            EmotionSymbol.Bad -> R.string.emotion_symbol_bad_text
+            EmotionSymbol.Good -> R.string.emotion_symbol_good_text
+            EmotionSymbol.Meh -> R.string.emotion_symbol_meh_text
+            EmotionSymbol.Rad -> R.string.emotion_symbol_rad_text
+        }
+    )
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally

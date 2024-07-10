@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="empty_stats_text">No diary stats yet. Click + button on a diary screen to add something first!</string>
+</resources>
