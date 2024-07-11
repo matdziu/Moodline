@@ -1,8 +1,8 @@
 package com.addentry
 
 import app.cash.turbine.turbineScope
-import com.commontest.SingleDiaryEntryProvider
 import com.commontest.MainDispatcher
+import com.commontest.SingleDiaryEntryProvider
 import com.domain.entities.Emotion
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
