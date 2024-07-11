@@ -88,17 +88,6 @@ internal class DiaryViewModel @Inject constructor(
         listenToAllEntriesJob?.cancel()
     }
 
-    private fun fetchDiaryEntries() {
-        viewModelScope.launch {
-            _state.update {
-                it.copy(
-                    progress = false,
-                    entries = diaryEntriesRepository.getAll().diaryEntriesToListItems()
-                )
-            }
-        }
-    }
-
     private fun List<DiaryEntry>.diaryEntriesToListItems(): ImmutableList<DiaryItem> {
         return sortedByDescending { entry -> entry.createdAt }.map { entry -> entry.toDiaryItem() }
             .toPersistentList()

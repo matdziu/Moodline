@@ -26,6 +26,6 @@ internal fun ImproveScreen() {
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
-        Text(text = "IMPROVE")
+        Text(text = "Stay tuned!")
     }
 }

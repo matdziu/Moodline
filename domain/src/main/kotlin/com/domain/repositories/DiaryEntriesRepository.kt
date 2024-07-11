@@ -17,5 +17,5 @@ interface DiaryEntriesRepository {
 
     suspend fun updateEntry(diaryEntry: DiaryEntry)
 
-    suspend fun getByMonthAndYearFlow(month: Int, year: Int): List<DiaryEntry>
+    suspend fun getByMonthAndYear(month: Int, year: Int): List<DiaryEntry>
 }

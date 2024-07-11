@@ -44,5 +44,9 @@ dependencies {
     implementation(libs.androidx.compose.icons.extended)
     implementation(libs.androidx.compose.lifecycle)
 
+    testImplementation(projects.commonTest)
     testImplementation(libs.junit)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlin.coroutines.test)
+    testImplementation(libs.turbine)
 }

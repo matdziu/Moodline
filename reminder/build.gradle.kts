@@ -20,5 +20,9 @@ dependencies {
     implementation(libs.work.manager.ktx)
     implementation(libs.accompanist.permissions)
 
+    testImplementation(projects.commonTest)
     testImplementation(libs.junit)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.kotlin.coroutines.test)
+    testImplementation(libs.turbine)
 }

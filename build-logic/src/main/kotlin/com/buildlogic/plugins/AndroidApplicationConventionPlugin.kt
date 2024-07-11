@@ -18,6 +18,9 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             extensions.configure<ApplicationExtension> {
                 configureKotlinAndroid(this)
                 defaultConfig.targetSdk = 34
+                testOptions {
+                    unitTests.all { it.useJUnitPlatform() }
+                }
             }
 
             dependencies {

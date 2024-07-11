@@ -74,7 +74,7 @@ internal class StatsViewModel @Inject constructor(
                 val currentCreatedAtMonth = currentCreatedAt.monthValue
                 val currentCreatedAtYear = currentCreatedAt.year
 
-                val entriesByMonthAndYear = diaryEntriesRepository.getByMonthAndYearFlow(
+                val entriesByMonthAndYear = diaryEntriesRepository.getByMonthAndYear(
                     month = currentCreatedAtMonth, year = currentCreatedAtYear
                 )
 

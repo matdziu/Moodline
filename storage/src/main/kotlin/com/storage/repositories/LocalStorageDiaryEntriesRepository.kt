@@ -50,7 +50,7 @@ internal class LocalStorageDiaryEntriesRepository @Inject constructor(
             diaryEntryDao.updateEntries(diaryEntry.toDiaryEntryDb())
         }
 
-    override suspend fun getByMonthAndYearFlow(month: Int, year: Int): List<DiaryEntry> {
+    override suspend fun getByMonthAndYear(month: Int, year: Int): List<DiaryEntry> {
         return withContext(coroutineDispatchersProvider.io()) {
             diaryEntryDao.getByMonthAndYear(month = month, year = year).map {
                 it.toDiaryEntry()
