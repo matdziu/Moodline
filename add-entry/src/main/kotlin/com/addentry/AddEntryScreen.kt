@@ -1,5 +1,6 @@
 package com.addentry
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -53,6 +55,16 @@ internal fun AddEntryRoute(
                 }
             }
         }
+    }
+
+    val context = LocalContext.current
+    if (state.showFixErrorsToast) {
+        addEntryViewModel.onEvent(AddEntryUIEvent.FixErrorsToastDisplayed)
+        Toast.makeText(
+            context,
+            R.string.diary_fix_errors_toast,
+            Toast.LENGTH_SHORT,
+        ).show()
     }
 
     AddEntryScreen(

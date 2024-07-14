@@ -3,4 +3,5 @@
     <string name="diary_entry_text_hint">Click and start typing…</string>
     <string name="add_entry_save_button">Save</string>
     <string name="cancel_entry_save_button">Cancel</string>
+    <string name="diary_fix_errors_toast">Fix errors in your entry first</string>
 </resources>

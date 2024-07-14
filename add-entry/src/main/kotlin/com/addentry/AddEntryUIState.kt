@@ -10,5 +10,6 @@ data class AddEntryUIState(
     val progress: Boolean = false,
     val emotionNotSelectedError: Boolean = false,
     val selectedTime: LocalTime = LocalTime.now(),
-    val selectedDate: LocalDate = LocalDate.now()
+    val selectedDate: LocalDate = LocalDate.now(),
+    val showFixErrorsToast: Boolean = false,
 )

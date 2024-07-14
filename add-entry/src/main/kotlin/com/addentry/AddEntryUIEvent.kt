@@ -19,4 +19,6 @@ sealed interface AddEntryUIEvent {
     data class DateSelected(val localDate: LocalDate) : AddEntryUIEvent
 
     data object Initialize : AddEntryUIEvent
+
+    data object FixErrorsToastDisplayed : AddEntryUIEvent
 }

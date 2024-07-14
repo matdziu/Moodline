@@ -217,4 +217,27 @@ class AddEntryViewModelTest {
             verify(provider.diaryEntriesRepository, never()).updateEntry(any())
         }
     }
+
+    @Test
+    fun `should hide toast when fix errors toast was displayed`() = runTest {
+        val provider = BasicAddEntryViewModelProvider()
+        val addEntryViewModel = provider.provide()
+
+        turbineScope {
+            val state = addEntryViewModel.state.testIn(backgroundScope)
+
+            addEntryViewModel.onEvent(AddEntryUIEvent.SaveButtonPressed)
+            addEntryViewModel.onEvent(AddEntryUIEvent.FixErrorsToastDisplayed)
+
+            state.skipItems(1)
+            assertEquals(
+                true,
+                state.awaitItem().showFixErrorsToast,
+            )
+            assertEquals(
+                false,
+                state.awaitItem().showFixErrorsToast,
+            )
+        }
+    }
 }

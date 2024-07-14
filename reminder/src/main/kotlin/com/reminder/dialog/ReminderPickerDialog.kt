@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
@@ -104,7 +106,9 @@ private fun ReminderPickerDialogContent(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.padding(32.dp)
+        modifier = Modifier
+            .padding(32.dp)
+            .verticalScroll(rememberScrollState()),
     ) {
         Text(
             text = stringResource(id = R.string.reminder_title),
@@ -125,6 +129,14 @@ private fun ReminderPickerDialogContent(
         MoodlineTimePicker(
             selectedTime = reminderUIState.selectedTime,
             onTimeSelected = onTimeSelected,
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(
+            text = stringResource(id = R.string.reminder_disclaimer),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.labelSmall,
         )
 
         Spacer(modifier = Modifier.height(32.dp))

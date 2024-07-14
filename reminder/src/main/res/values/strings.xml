@@ -4,6 +4,7 @@
     <string name="reminder_option_every_other_day">every other day</string>
     <string name="reminder_option_every_week">every week</string>
     <string name="reminder_title">Set a reminder for your diary entries:</string>
+    <string name="reminder_disclaimer">Due to battery optimizations introduced by manufacturers of some Android devices, our notifications may appear with a slight delay on certain phones</string>
     <string name="reminder_positive_button">Save</string>
     <string name="reminder_negative_button">Cancel</string>
     <string name="diary_reminder_picker_button_not_set">Click to SET a reminder for diary entries</string>

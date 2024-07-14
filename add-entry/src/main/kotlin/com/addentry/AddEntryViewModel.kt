@@ -59,6 +59,7 @@ class AddEntryViewModel @Inject constructor(
             AddEntryUIEvent.CancelButtonPressed -> handleCancelButtonPressed()
             is AddEntryUIEvent.DateSelected -> handleDateSelected(event.localDate)
             is AddEntryUIEvent.TimeSelected -> handleTimeSelected(event.localTime)
+            AddEntryUIEvent.FixErrorsToastDisplayed -> handleFixErrorsToastDisplayed()
         }
     }
 
@@ -109,6 +110,7 @@ class AddEntryViewModel @Inject constructor(
             _state.update {
                 it.copy(
                     emotionNotSelectedError = true,
+                    showFixErrorsToast = true,
                 )
             }
             entryAddingInProgress = false
@@ -116,6 +118,11 @@ class AddEntryViewModel @Inject constructor(
         }
 
         if (diaryEntryText.length > MAX_CHAR_LENGTH_OF_DIARY_ENTRY) {
+            _state.update {
+                it.copy(
+                    showFixErrorsToast = true,
+                )
+            }
             entryAddingInProgress = false
             return@launch
         }
@@ -171,6 +178,14 @@ class AddEntryViewModel @Inject constructor(
     private fun handleCancelButtonPressed() {
         viewModelScope.launch {
             _navigationEvents.emit(AddEntryNavigationEvent.CloseScreen)
+        }
+    }
+
+    private fun handleFixErrorsToastDisplayed() {
+        _state.update {
+            it.copy(
+                showFixErrorsToast = false,
+            )
         }
     }
 }
