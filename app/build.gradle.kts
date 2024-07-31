@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.moodline.android.application)
     alias(libs.plugins.moodline.android.hilt)
@@ -15,6 +18,21 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        create("release") {
+
+            val keystorePropertiesFile = rootProject.file("keystore.properties")
+            val keystoreProperties = Properties()
+
+            keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+
+            keyAlias = keystoreProperties.getProperty("MOODLINE_UPLOAD_KEY_ALIAS")
+            keyPassword = keystoreProperties.getProperty("MOODLINE_UPLOAD_KEY_PASSWORD")
+            storeFile = file(keystoreProperties.getProperty("MOODLINE_UPLOAD_KEYSTORE_PATH"))
+            storePassword = keystoreProperties.getProperty("MOODLINE_UPLOAD_STORE_PASSWORD")
+        }
+    }
+
     buildTypes {
         debug {
             isMinifyEnabled = false
@@ -28,6 +46,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
 }
