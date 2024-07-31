@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Moodline</string>
     <string name="bottom_nav_title_diary">Diary</string>
     <string name="bottom_nav_title_stats">Stats</string>
     <string name="bottom_nav_title_improve">Improve Your Mood</string>

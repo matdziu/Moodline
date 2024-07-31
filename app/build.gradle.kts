@@ -16,8 +16,14 @@ android {
     }
 
     buildTypes {
-        release {
+        debug {
             isMinifyEnabled = false
+            applicationIdSuffix = ".debug"
+        }
+
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -34,6 +40,7 @@ dependencies {
     implementation(projects.addEntry)
     implementation(projects.storage)
     implementation(projects.common)
+    implementation(projects.analytics)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.compose.activity)
