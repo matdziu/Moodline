@@ -30,6 +30,7 @@ androidxJunit = "1.2.1"
 googleServices = "4.4.2"
 firebaseBom = "33.1.2"
 firebaseCrashlyticsPlugin = "3.0.2"
+facebookSdk = "16.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -72,6 +73,7 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "a
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics" }
+facebook-sdk = { group = "com.facebook.android", name = "facebook-android-sdk", version.ref = "facebookSdk" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

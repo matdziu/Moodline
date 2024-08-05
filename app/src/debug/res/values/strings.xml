@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">DEBUG-Moodline</string>
+    <string name="facebook_app_id">418102201266200</string>
+    <string name="facebook_client_token">5faffc143bfba620f10717dfd1af8455</string>
 </resources>

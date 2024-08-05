@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Moodline</string>
+    <string name="facebook_app_id">477854098195145</string>
+    <string name="facebook_client_token">ab0a453433e48ed8a88a0d443c8fab8e</string>
 </resources>
