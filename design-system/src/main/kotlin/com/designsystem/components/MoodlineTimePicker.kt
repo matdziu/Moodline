@@ -57,7 +57,7 @@ fun MoodlineTimePicker(
             initialMinute = selectedTime.minute,
             is24Hour = true,
         )
-        DateTimePickerDialog(
+        TimePickerDialog(
             onDismissRequest = { showTimePicker = false },
             confirmButton = {
                 MoodlineOutlinedButton(

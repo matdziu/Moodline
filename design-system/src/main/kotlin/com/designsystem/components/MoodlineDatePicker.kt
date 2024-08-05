@@ -1,12 +1,11 @@
 package com.designsystem.components
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
@@ -17,7 +16,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -65,7 +63,7 @@ fun MoodlineDatePicker(
                 .toInstant()
                 .toEpochMilli()
         )
-        DateTimePickerDialog(
+        DatePickerDialog(
             onDismissRequest = { showDatePicker = false },
             confirmButton = {
                 MoodlineOutlinedButton(
@@ -93,22 +91,7 @@ fun MoodlineDatePicker(
                 )
             }
         ) {
-            val configuration = LocalConfiguration.current
-            val screenHeight = configuration.screenHeightDp.dp
-            val screenWidth = configuration.screenWidthDp.dp
-
-            val screenMeasurements = listOf(screenHeight, screenWidth)
-
-            val datePickerWidth = screenMeasurements.min()
-            val datePickerHeight = screenMeasurements.max()
-
-            Column(
-                modifier = Modifier
-                    .width(datePickerWidth)
-                    .height(datePickerHeight * 0.7f),
-            ) {
-                DatePicker(state = datePickerState)
-            }
+            DatePicker(state = datePickerState)
         }
     }
 }
