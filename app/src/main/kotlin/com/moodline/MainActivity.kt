@@ -7,12 +7,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.common.constants.IMPROVE_AD_REF_LINK
 import com.common.extensions.launchAndRepeatOnLifecycle
 import com.designsystem.theme.MoodlineTheme
 import com.diary.navigation.diaryRoute
@@ -61,9 +63,16 @@ class MainActivity : ComponentActivity() {
             }
 
             MoodlineTheme {
+                val uriHandler = LocalUriHandler.current
                 MainScreen(
                     mainUIState = state,
-                    onBottomNavItemClicked = mainViewModel::onBottomNavItemClicked,
+                    onBottomNavItemClicked = {
+                        if (it == BottomNavBarId.IMPROVE.toString()) {
+                            uriHandler.openUri(IMPROVE_AD_REF_LINK)
+                        }
+
+                        mainViewModel.onBottomNavItemClicked(it)
+                    },
                 ) { innerPadding ->
                     MoodlineNavHost(
                         navController = navController,
