@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.moodline.android.library)
     alias(libs.plugins.moodline.android.compose.library)
+    alias(libs.plugins.moodline.android.hilt)
 }
 
 android {
@@ -10,6 +11,7 @@ android {
 dependencies {
     implementation(projects.designSystem)
     implementation(projects.common)
+    implementation(projects.analytics)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.compose.material3)

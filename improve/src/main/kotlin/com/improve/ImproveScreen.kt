@@ -27,20 +27,28 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.common.constants.IMPROVE_AD_REF_LINK
 import com.designsystem.components.MoodlineButton
 import com.designsystem.theme.MoodlineTheme
 
 @Composable
-internal fun ImproveRoute(onBackButtonPressed: () -> Unit) {
+internal fun ImproveRoute(
+    onBackButtonPressed: () -> Unit,
+    improveViewModel: ImproveViewModel = hiltViewModel(),
+) {
     BackHandler {
         onBackButtonPressed()
     }
-    ImproveScreen()
+    ImproveScreen(
+        onLearnMoreButtonClicked = improveViewModel::trackRefLinkClick,
+    )
 }
 
 @Composable
-internal fun ImproveScreen() {
+internal fun ImproveScreen(
+    onLearnMoreButtonClicked: () -> Unit,
+) {
     val uriHandler = LocalUriHandler.current
     Column(
         modifier = Modifier
@@ -87,7 +95,10 @@ internal fun ImproveScreen() {
         Spacer(modifier = Modifier.height(22.dp))
         MoodlineButton(
             text = stringResource(id = R.string.ad_cta_text),
-            onClick = { uriHandler.openUri(IMPROVE_AD_REF_LINK) },
+            onClick = {
+                onLearnMoreButtonClicked()
+                uriHandler.openUri(IMPROVE_AD_REF_LINK)
+            },
         )
     }
 }
@@ -96,6 +107,8 @@ internal fun ImproveScreen() {
 @Preview(showBackground = true)
 private fun ImproveScreenPreview() {
     MoodlineTheme {
-        ImproveScreen()
+        ImproveScreen(
+            onLearnMoreButtonClicked = {},
+        )
     }
 }

@@ -3,6 +3,8 @@ package com.moodline
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.analytics.FacebookCustomEvent
+import com.analytics.FacebookSdkWrapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +21,7 @@ const val SELECTED_NAV_ITEM_ID_KEY = "selected-nav-item-id"
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
+    private val facebookSdkWrapper: FacebookSdkWrapper,
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<MainUIState> = MutableStateFlow(
@@ -34,7 +37,11 @@ class MainViewModel @Inject constructor(
     fun onBottomNavItemClicked(bottomNavItemId: String) {
         when (bottomNavItemId) {
             BottomNavBarId.DIARY.toString() -> handleDiaryBottomNavIconPressed()
-            BottomNavBarId.IMPROVE.toString() -> handleImproveBottomNavIconPressed()
+            BottomNavBarId.IMPROVE.toString() -> {
+                facebookSdkWrapper.logCustomEvent(FacebookCustomEvent.ImproveRefLinkClicked)
+                handleImproveBottomNavIconPressed()
+            }
+
             BottomNavBarId.STATS.toString() -> handleStatsBottomNavIconPressed()
         }
     }

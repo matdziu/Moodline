@@ -13,6 +13,7 @@ class BasicMainViewModelProvider {
     fun provide(): MainViewModel {
         return MainViewModel(
             savedStateHandle = savedStateHandle,
+            facebookSdkWrapper = mock(),
         )
     }
 }
